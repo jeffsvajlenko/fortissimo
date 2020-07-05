@@ -1,0 +1,111 @@
+syntax = "proto3";
+
+package Fortissimo;
+option go_package = "github.com/jeffsvajlenko/fortissimo/api/go/fortissimo";
+option csharp_namespace = "Fortissimo.Protobuf.Library";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+
+// Library Service
+service Fortissimo {
+    rpc GetSong (GetSongRequest) returns (GetSongResponse);
+    rpc AddSong (AddSongRequest) returns (AddSongResponse);
+    rpc RemoveSong (RemoveSongRequest) returns (RemoveSongResponse);
+
+    rpc GetSongs (GetSongsRequest) returns (stream GetSongsResponse);
+}
+
+// GetSong
+message GetSongRequest {
+    int64 id = 1;
+}
+
+message GetSongsRequest {
+}
+
+// AddSong
+message AddSongRequest {
+    Song song = 1;
+}
+
+message AddSongResponse {
+    Song song = 1;
+}
+
+// RemoveSong
+message RemoveSongRequest {
+    int64 id = 1;
+}
+
+message RemoveSongResponse {
+}
+
+// GetSongs
+message GetSongsResponse {
+    Song song = 1;
+}
+
+message GetSongResponse {
+    Song song = 1;
+}
+
+
+// Data Objects
+message Song {
+    int64 id = 1;
+    string title = 2;
+    string title_sort = 3;
+    repeated string artists = 4;
+    string first_artist = 5;
+    string first_artist_sort = 6;
+    string first_album_artist = 7;
+    string first_album_artist_sort = 8;
+    string album_artist = 9;
+    string album = 10;
+    string publisher = 11;
+    string first_composer = 12;
+    string composers = 13;
+    string conductor = 14;
+    string genre = 15;
+    string grouping = 16;
+    int32 year = 17;
+    int32 track_number = 18;
+    int32 of_track_number = 19;
+    int32 disk_number = 20;
+    int32 of_disk_number = 21;
+    google.protobuf.Duration duration = 22;
+    int32 play_count = 23;
+    int32 skipped_count = 24;
+    string comment = 25;
+    int32 beats_per_minute = 26;
+    string copyright = 27;
+    google.protobuf.Timestamp date_tagged = 28;
+    string description = 29;
+    string first_composer_sort = 30;
+    string artists_sort = 31;
+    string lyrics = 32;
+    string initial_key = 33;
+    string isrc = 34;
+    string subtitle = 35;
+    string music_brainz_artist_id = 36;
+    string music_brainz_disc_id = 37;
+    string music_brainz_release_artist_id = 38;
+    string music_brainz_release_country = 39;
+    string music_brainz_release_group_id = 40;
+    string music_brainz_release_id = 41;
+    string music_brainz_release_status = 42;
+    string music_brainz_release_type = 43;
+    string music_brainz_track_id = 44;
+    string music_ip_id = 45;
+    string remixed_by = 46;
+    double replay_gain_album_gain = 47;
+    double replay_gain_album_peak = 48;
+    double replay_gain_track_gain = 49;
+    double replay_gain_track_peak = 50;
+    string mime_type = 51;
+    string path = 52;
+    string hash = 53;
+    google.protobuf.Timestamp created_date = 54;
+    google.protobuf.Timestamp modified_date = 55;
+}

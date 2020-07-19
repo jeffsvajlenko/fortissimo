@@ -720,14 +720,14 @@ func (sc *SongCreate) SetNillableMimeType(s *string) *SongCreate {
 }
 
 // AddTagIDs adds the tags edge to Tag by ids.
-func (sc *SongCreate) AddTagIDs(ids ...int) *SongCreate {
+func (sc *SongCreate) AddTagIDs(ids ...int64) *SongCreate {
 	sc.mutation.AddTagIDs(ids...)
 	return sc
 }
 
 // AddTags adds the tags edges to Tag.
 func (sc *SongCreate) AddTags(t ...*Tag) *SongCreate {
-	ids := make([]int, len(t))
+	ids := make([]int64, len(t))
 	for i := range t {
 		ids[i] = t[i].ID
 	}
@@ -789,12 +789,25 @@ func (sc *SongCreate) SaveX(ctx context.Context) *Song {
 }
 
 func (sc *SongCreate) sqlSave(ctx context.Context) (*Song, error) {
+	s, _spec := sc.createSpec()
+	if err := sqlgraph.CreateNode(ctx, sc.driver, _spec); err != nil {
+		if cerr, ok := isSQLConstraintError(err); ok {
+			err = cerr
+		}
+		return nil, err
+	}
+	id := _spec.ID.Value.(int64)
+	s.ID = int64(id)
+	return s, nil
+}
+
+func (sc *SongCreate) createSpec() (*Song, *sqlgraph.CreateSpec) {
 	var (
 		s     = &Song{config: sc.config}
 		_spec = &sqlgraph.CreateSpec{
 			Table: song.Table,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeInt64,
 				Column: song.FieldID,
 			},
 		}
@@ -1216,7 +1229,7 @@ func (sc *SongCreate) sqlSave(ctx context.Context) (*Song, error) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
+					Type:   field.TypeInt64,
 					Column: tag.FieldID,
 				},
 			},
@@ -1226,13 +1239,5 @@ func (sc *SongCreate) sqlSave(ctx context.Context) (*Song, error) {
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if err := sqlgraph.CreateNode(ctx, sc.driver, _spec); err != nil {
-		if cerr, ok := isSQLConstraintError(err); ok {
-			err = cerr
-		}
-		return nil, err
-	}
-	id := _spec.ID.Value.(int64)
-	s.ID = int(id)
-	return s, nil
+	return s, _spec
 }

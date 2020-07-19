@@ -59,7 +59,8 @@ func Open(driverName, dataSourceName string, options ...Option) (*Client, error)
 	}
 }
 
-// Tx returns a new transactional client.
+// Tx returns a new transactional client. The provided context
+// is used until the transaction is committed or rolled back.
 func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	if _, ok := c.driver.(*txDriver); ok {
 		return nil, fmt.Errorf("ent: cannot start a transaction within a transaction")
@@ -70,6 +71,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	}
 	cfg := config{driver: tx, log: c.log, debug: c.debug, hooks: c.hooks}
 	return &Tx{
+		ctx:    ctx,
 		config: cfg,
 		Song:   NewSongClient(cfg),
 		Tag:    NewTagClient(cfg),
@@ -157,7 +159,7 @@ func (c *SongClient) UpdateOne(s *Song) *SongUpdateOne {
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *SongClient) UpdateOneID(id int) *SongUpdateOne {
+func (c *SongClient) UpdateOneID(id int64) *SongUpdateOne {
 	mutation := newSongMutation(c.config, OpUpdateOne, withSongID(id))
 	return &SongUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -174,7 +176,7 @@ func (c *SongClient) DeleteOne(s *Song) *SongDeleteOne {
 }
 
 // DeleteOneID returns a delete builder for the given id.
-func (c *SongClient) DeleteOneID(id int) *SongDeleteOne {
+func (c *SongClient) DeleteOneID(id int64) *SongDeleteOne {
 	builder := c.Delete().Where(song.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -187,12 +189,12 @@ func (c *SongClient) Query() *SongQuery {
 }
 
 // Get returns a Song entity by its id.
-func (c *SongClient) Get(ctx context.Context, id int) (*Song, error) {
+func (c *SongClient) Get(ctx context.Context, id int64) (*Song, error) {
 	return c.Query().Where(song.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *SongClient) GetX(ctx context.Context, id int) *Song {
+func (c *SongClient) GetX(ctx context.Context, id int64) *Song {
 	s, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
@@ -256,7 +258,7 @@ func (c *TagClient) UpdateOne(t *Tag) *TagUpdateOne {
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *TagClient) UpdateOneID(id int) *TagUpdateOne {
+func (c *TagClient) UpdateOneID(id int64) *TagUpdateOne {
 	mutation := newTagMutation(c.config, OpUpdateOne, withTagID(id))
 	return &TagUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -273,7 +275,7 @@ func (c *TagClient) DeleteOne(t *Tag) *TagDeleteOne {
 }
 
 // DeleteOneID returns a delete builder for the given id.
-func (c *TagClient) DeleteOneID(id int) *TagDeleteOne {
+func (c *TagClient) DeleteOneID(id int64) *TagDeleteOne {
 	builder := c.Delete().Where(tag.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -286,12 +288,12 @@ func (c *TagClient) Query() *TagQuery {
 }
 
 // Get returns a Tag entity by its id.
-func (c *TagClient) Get(ctx context.Context, id int) (*Tag, error) {
+func (c *TagClient) Get(ctx context.Context, id int64) (*Tag, error) {
 	return c.Query().Where(tag.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *TagClient) GetX(ctx context.Context, id int) *Tag {
+func (c *TagClient) GetX(ctx context.Context, id int64) *Tag {
 	t, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)

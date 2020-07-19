@@ -96,8 +96,8 @@ func (tq *TagQuery) FirstX(ctx context.Context) *Tag {
 }
 
 // FirstID returns the first Tag id in the query. Returns *NotFoundError when no id was found.
-func (tq *TagQuery) FirstID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (tq *TagQuery) FirstID(ctx context.Context) (id int64, err error) {
+	var ids []int64
 	if ids, err = tq.Limit(1).IDs(ctx); err != nil {
 		return
 	}
@@ -109,7 +109,7 @@ func (tq *TagQuery) FirstID(ctx context.Context) (id int, err error) {
 }
 
 // FirstXID is like FirstID, but panics if an error occurs.
-func (tq *TagQuery) FirstXID(ctx context.Context) int {
+func (tq *TagQuery) FirstXID(ctx context.Context) int64 {
 	id, err := tq.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -143,8 +143,8 @@ func (tq *TagQuery) OnlyX(ctx context.Context) *Tag {
 }
 
 // OnlyID returns the only Tag id in the query, returns an error if not exactly one id was returned.
-func (tq *TagQuery) OnlyID(ctx context.Context) (id int, err error) {
-	var ids []int
+func (tq *TagQuery) OnlyID(ctx context.Context) (id int64, err error) {
+	var ids []int64
 	if ids, err = tq.Limit(2).IDs(ctx); err != nil {
 		return
 	}
@@ -159,8 +159,8 @@ func (tq *TagQuery) OnlyID(ctx context.Context) (id int, err error) {
 	return
 }
 
-// OnlyXID is like OnlyID, but panics if an error occurs.
-func (tq *TagQuery) OnlyXID(ctx context.Context) int {
+// OnlyIDX is like OnlyID, but panics if an error occurs.
+func (tq *TagQuery) OnlyIDX(ctx context.Context) int64 {
 	id, err := tq.OnlyID(ctx)
 	if err != nil {
 		panic(err)
@@ -186,8 +186,8 @@ func (tq *TagQuery) AllX(ctx context.Context) []*Tag {
 }
 
 // IDs executes the query and returns a list of Tag ids.
-func (tq *TagQuery) IDs(ctx context.Context) ([]int, error) {
-	var ids []int
+func (tq *TagQuery) IDs(ctx context.Context) ([]int64, error) {
+	var ids []int64
 	if err := tq.Select(tag.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -195,7 +195,7 @@ func (tq *TagQuery) IDs(ctx context.Context) ([]int, error) {
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (tq *TagQuery) IDsX(ctx context.Context) []int {
+func (tq *TagQuery) IDsX(ctx context.Context) []int64 {
 	ids, err := tq.IDs(ctx)
 	if err != nil {
 		panic(err)
@@ -357,14 +357,14 @@ func (tq *TagQuery) sqlAll(ctx context.Context) ([]*Tag, error) {
 
 	if query := tq.withSongs; query != nil {
 		fks := make([]driver.Value, 0, len(nodes))
-		ids := make(map[int]*Tag, len(nodes))
+		ids := make(map[int64]*Tag, len(nodes))
 		for _, node := range nodes {
 			ids[node.ID] = node
 			fks = append(fks, node.ID)
 		}
 		var (
-			edgeids []int
-			edges   = make(map[int][]*Tag)
+			edgeids []int64
+			edges   = make(map[int64][]*Tag)
 		)
 		_spec := &sqlgraph.EdgeQuerySpec{
 			Edge: &sqlgraph.EdgeSpec{
@@ -388,8 +388,8 @@ func (tq *TagQuery) sqlAll(ctx context.Context) ([]*Tag, error) {
 				if !ok || ein == nil {
 					return fmt.Errorf("unexpected id value for edge-in")
 				}
-				outValue := int(eout.Int64)
-				inValue := int(ein.Int64)
+				outValue := eout.Int64
+				inValue := ein.Int64
 				node, ok := ids[outValue]
 				if !ok {
 					return fmt.Errorf("unexpected node id in edges: %v", outValue)
@@ -440,7 +440,7 @@ func (tq *TagQuery) querySpec() *sqlgraph.QuerySpec {
 			Table:   tag.Table,
 			Columns: tag.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeInt64,
 				Column: tag.FieldID,
 			},
 		},
@@ -549,6 +549,32 @@ func (tgb *TagGroupBy) StringsX(ctx context.Context) []string {
 	return v
 }
 
+// String returns a single string from group-by. It is only allowed when querying group-by with one field.
+func (tgb *TagGroupBy) String(ctx context.Context) (_ string, err error) {
+	var v []string
+	if v, err = tgb.Strings(ctx); err != nil {
+		return
+	}
+	switch len(v) {
+	case 1:
+		return v[0], nil
+	case 0:
+		err = &NotFoundError{tag.Label}
+	default:
+		err = fmt.Errorf("ent: TagGroupBy.Strings returned %d results when one was expected", len(v))
+	}
+	return
+}
+
+// StringX is like String, but panics if an error occurs.
+func (tgb *TagGroupBy) StringX(ctx context.Context) string {
+	v, err := tgb.String(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return v
+}
+
 // Ints returns list of ints from group-by. It is only allowed when querying group-by with one field.
 func (tgb *TagGroupBy) Ints(ctx context.Context) ([]int, error) {
 	if len(tgb.fields) > 1 {
@@ -564,6 +590,32 @@ func (tgb *TagGroupBy) Ints(ctx context.Context) ([]int, error) {
 // IntsX is like Ints, but panics if an error occurs.
 func (tgb *TagGroupBy) IntsX(ctx context.Context) []int {
 	v, err := tgb.Ints(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return v
+}
+
+// Int returns a single int from group-by. It is only allowed when querying group-by with one field.
+func (tgb *TagGroupBy) Int(ctx context.Context) (_ int, err error) {
+	var v []int
+	if v, err = tgb.Ints(ctx); err != nil {
+		return
+	}
+	switch len(v) {
+	case 1:
+		return v[0], nil
+	case 0:
+		err = &NotFoundError{tag.Label}
+	default:
+		err = fmt.Errorf("ent: TagGroupBy.Ints returned %d results when one was expected", len(v))
+	}
+	return
+}
+
+// IntX is like Int, but panics if an error occurs.
+func (tgb *TagGroupBy) IntX(ctx context.Context) int {
+	v, err := tgb.Int(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -591,6 +643,32 @@ func (tgb *TagGroupBy) Float64sX(ctx context.Context) []float64 {
 	return v
 }
 
+// Float64 returns a single float64 from group-by. It is only allowed when querying group-by with one field.
+func (tgb *TagGroupBy) Float64(ctx context.Context) (_ float64, err error) {
+	var v []float64
+	if v, err = tgb.Float64s(ctx); err != nil {
+		return
+	}
+	switch len(v) {
+	case 1:
+		return v[0], nil
+	case 0:
+		err = &NotFoundError{tag.Label}
+	default:
+		err = fmt.Errorf("ent: TagGroupBy.Float64s returned %d results when one was expected", len(v))
+	}
+	return
+}
+
+// Float64X is like Float64, but panics if an error occurs.
+func (tgb *TagGroupBy) Float64X(ctx context.Context) float64 {
+	v, err := tgb.Float64(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return v
+}
+
 // Bools returns list of bools from group-by. It is only allowed when querying group-by with one field.
 func (tgb *TagGroupBy) Bools(ctx context.Context) ([]bool, error) {
 	if len(tgb.fields) > 1 {
@@ -606,6 +684,32 @@ func (tgb *TagGroupBy) Bools(ctx context.Context) ([]bool, error) {
 // BoolsX is like Bools, but panics if an error occurs.
 func (tgb *TagGroupBy) BoolsX(ctx context.Context) []bool {
 	v, err := tgb.Bools(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return v
+}
+
+// Bool returns a single bool from group-by. It is only allowed when querying group-by with one field.
+func (tgb *TagGroupBy) Bool(ctx context.Context) (_ bool, err error) {
+	var v []bool
+	if v, err = tgb.Bools(ctx); err != nil {
+		return
+	}
+	switch len(v) {
+	case 1:
+		return v[0], nil
+	case 0:
+		err = &NotFoundError{tag.Label}
+	default:
+		err = fmt.Errorf("ent: TagGroupBy.Bools returned %d results when one was expected", len(v))
+	}
+	return
+}
+
+// BoolX is like Bool, but panics if an error occurs.
+func (tgb *TagGroupBy) BoolX(ctx context.Context) bool {
+	v, err := tgb.Bool(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -679,6 +783,32 @@ func (ts *TagSelect) StringsX(ctx context.Context) []string {
 	return v
 }
 
+// String returns a single string from selector. It is only allowed when selecting one field.
+func (ts *TagSelect) String(ctx context.Context) (_ string, err error) {
+	var v []string
+	if v, err = ts.Strings(ctx); err != nil {
+		return
+	}
+	switch len(v) {
+	case 1:
+		return v[0], nil
+	case 0:
+		err = &NotFoundError{tag.Label}
+	default:
+		err = fmt.Errorf("ent: TagSelect.Strings returned %d results when one was expected", len(v))
+	}
+	return
+}
+
+// StringX is like String, but panics if an error occurs.
+func (ts *TagSelect) StringX(ctx context.Context) string {
+	v, err := ts.String(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return v
+}
+
 // Ints returns list of ints from selector. It is only allowed when selecting one field.
 func (ts *TagSelect) Ints(ctx context.Context) ([]int, error) {
 	if len(ts.fields) > 1 {
@@ -694,6 +824,32 @@ func (ts *TagSelect) Ints(ctx context.Context) ([]int, error) {
 // IntsX is like Ints, but panics if an error occurs.
 func (ts *TagSelect) IntsX(ctx context.Context) []int {
 	v, err := ts.Ints(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return v
+}
+
+// Int returns a single int from selector. It is only allowed when selecting one field.
+func (ts *TagSelect) Int(ctx context.Context) (_ int, err error) {
+	var v []int
+	if v, err = ts.Ints(ctx); err != nil {
+		return
+	}
+	switch len(v) {
+	case 1:
+		return v[0], nil
+	case 0:
+		err = &NotFoundError{tag.Label}
+	default:
+		err = fmt.Errorf("ent: TagSelect.Ints returned %d results when one was expected", len(v))
+	}
+	return
+}
+
+// IntX is like Int, but panics if an error occurs.
+func (ts *TagSelect) IntX(ctx context.Context) int {
+	v, err := ts.Int(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -721,6 +877,32 @@ func (ts *TagSelect) Float64sX(ctx context.Context) []float64 {
 	return v
 }
 
+// Float64 returns a single float64 from selector. It is only allowed when selecting one field.
+func (ts *TagSelect) Float64(ctx context.Context) (_ float64, err error) {
+	var v []float64
+	if v, err = ts.Float64s(ctx); err != nil {
+		return
+	}
+	switch len(v) {
+	case 1:
+		return v[0], nil
+	case 0:
+		err = &NotFoundError{tag.Label}
+	default:
+		err = fmt.Errorf("ent: TagSelect.Float64s returned %d results when one was expected", len(v))
+	}
+	return
+}
+
+// Float64X is like Float64, but panics if an error occurs.
+func (ts *TagSelect) Float64X(ctx context.Context) float64 {
+	v, err := ts.Float64(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return v
+}
+
 // Bools returns list of bools from selector. It is only allowed when selecting one field.
 func (ts *TagSelect) Bools(ctx context.Context) ([]bool, error) {
 	if len(ts.fields) > 1 {
@@ -736,6 +918,32 @@ func (ts *TagSelect) Bools(ctx context.Context) ([]bool, error) {
 // BoolsX is like Bools, but panics if an error occurs.
 func (ts *TagSelect) BoolsX(ctx context.Context) []bool {
 	v, err := ts.Bools(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return v
+}
+
+// Bool returns a single bool from selector. It is only allowed when selecting one field.
+func (ts *TagSelect) Bool(ctx context.Context) (_ bool, err error) {
+	var v []bool
+	if v, err = ts.Bools(ctx); err != nil {
+		return
+	}
+	switch len(v) {
+	case 1:
+		return v[0], nil
+	case 0:
+		err = &NotFoundError{tag.Label}
+	default:
+		err = fmt.Errorf("ent: TagSelect.Bools returned %d results when one was expected", len(v))
+	}
+	return
+}
+
+// BoolX is like Bool, but panics if an error occurs.
+func (ts *TagSelect) BoolX(ctx context.Context) bool {
+	v, err := ts.Bool(ctx)
 	if err != nil {
 		panic(err)
 	}

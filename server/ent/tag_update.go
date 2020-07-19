@@ -35,14 +35,14 @@ func (tu *TagUpdate) SetName(s string) *TagUpdate {
 }
 
 // AddSongIDs adds the songs edge to Song by ids.
-func (tu *TagUpdate) AddSongIDs(ids ...int) *TagUpdate {
+func (tu *TagUpdate) AddSongIDs(ids ...int64) *TagUpdate {
 	tu.mutation.AddSongIDs(ids...)
 	return tu
 }
 
 // AddSongs adds the songs edges to Song.
 func (tu *TagUpdate) AddSongs(s ...*Song) *TagUpdate {
-	ids := make([]int, len(s))
+	ids := make([]int64, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
@@ -55,14 +55,14 @@ func (tu *TagUpdate) Mutation() *TagMutation {
 }
 
 // RemoveSongIDs removes the songs edge to Song by ids.
-func (tu *TagUpdate) RemoveSongIDs(ids ...int) *TagUpdate {
+func (tu *TagUpdate) RemoveSongIDs(ids ...int64) *TagUpdate {
 	tu.mutation.RemoveSongIDs(ids...)
 	return tu
 }
 
 // RemoveSongs removes songs edges to Song.
 func (tu *TagUpdate) RemoveSongs(s ...*Song) *TagUpdate {
-	ids := make([]int, len(s))
+	ids := make([]int64, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
@@ -127,7 +127,7 @@ func (tu *TagUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Table:   tag.Table,
 			Columns: tag.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeInt64,
 				Column: tag.FieldID,
 			},
 		},
@@ -155,7 +155,7 @@ func (tu *TagUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
+					Type:   field.TypeInt64,
 					Column: song.FieldID,
 				},
 			},
@@ -174,7 +174,7 @@ func (tu *TagUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
+					Type:   field.TypeInt64,
 					Column: song.FieldID,
 				},
 			},
@@ -209,14 +209,14 @@ func (tuo *TagUpdateOne) SetName(s string) *TagUpdateOne {
 }
 
 // AddSongIDs adds the songs edge to Song by ids.
-func (tuo *TagUpdateOne) AddSongIDs(ids ...int) *TagUpdateOne {
+func (tuo *TagUpdateOne) AddSongIDs(ids ...int64) *TagUpdateOne {
 	tuo.mutation.AddSongIDs(ids...)
 	return tuo
 }
 
 // AddSongs adds the songs edges to Song.
 func (tuo *TagUpdateOne) AddSongs(s ...*Song) *TagUpdateOne {
-	ids := make([]int, len(s))
+	ids := make([]int64, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
@@ -229,14 +229,14 @@ func (tuo *TagUpdateOne) Mutation() *TagMutation {
 }
 
 // RemoveSongIDs removes the songs edge to Song by ids.
-func (tuo *TagUpdateOne) RemoveSongIDs(ids ...int) *TagUpdateOne {
+func (tuo *TagUpdateOne) RemoveSongIDs(ids ...int64) *TagUpdateOne {
 	tuo.mutation.RemoveSongIDs(ids...)
 	return tuo
 }
 
 // RemoveSongs removes songs edges to Song.
 func (tuo *TagUpdateOne) RemoveSongs(s ...*Song) *TagUpdateOne {
-	ids := make([]int, len(s))
+	ids := make([]int64, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
@@ -301,7 +301,7 @@ func (tuo *TagUpdateOne) sqlSave(ctx context.Context) (t *Tag, err error) {
 			Table:   tag.Table,
 			Columns: tag.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeInt64,
 				Column: tag.FieldID,
 			},
 		},
@@ -327,7 +327,7 @@ func (tuo *TagUpdateOne) sqlSave(ctx context.Context) (t *Tag, err error) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
+					Type:   field.TypeInt64,
 					Column: song.FieldID,
 				},
 			},
@@ -346,7 +346,7 @@ func (tuo *TagUpdateOne) sqlSave(ctx context.Context) (t *Tag, err error) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
+					Type:   field.TypeInt64,
 					Column: song.FieldID,
 				},
 			},

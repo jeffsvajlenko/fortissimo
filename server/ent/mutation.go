@@ -33,7 +33,7 @@ type SongMutation struct {
 	config
 	op                             Op
 	typ                            string
-	id                             *int
+	id                             *int64
 	path                           *string
 	title                          *string
 	title_sort                     *string
@@ -99,8 +99,8 @@ type SongMutation struct {
 	addreplay_gain_track_peak      *float64
 	mime_type                      *string
 	clearedFields                  map[string]struct{}
-	tags                           map[int]struct{}
-	removedtags                    map[int]struct{}
+	tags                           map[int64]struct{}
+	removedtags                    map[int64]struct{}
 	done                           bool
 	oldValue                       func(context.Context) (*Song, error)
 }
@@ -125,7 +125,7 @@ func newSongMutation(c config, op Op, opts ...songOption) *SongMutation {
 }
 
 // withSongID sets the id field of the mutation.
-func withSongID(id int) songOption {
+func withSongID(id int64) songOption {
 	return func(m *SongMutation) {
 		var (
 			err   error
@@ -177,7 +177,7 @@ func (m SongMutation) Tx() (*Tx, error) {
 
 // ID returns the id value in the mutation. Note that, the id
 // is available only if it was provided to the builder.
-func (m *SongMutation) ID() (id int, exists bool) {
+func (m *SongMutation) ID() (id int64, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -2967,9 +2967,9 @@ func (m *SongMutation) ResetMimeType() {
 }
 
 // AddTagIDs adds the tags edge to Tag by ids.
-func (m *SongMutation) AddTagIDs(ids ...int) {
+func (m *SongMutation) AddTagIDs(ids ...int64) {
 	if m.tags == nil {
-		m.tags = make(map[int]struct{})
+		m.tags = make(map[int64]struct{})
 	}
 	for i := range ids {
 		m.tags[ids[i]] = struct{}{}
@@ -2977,9 +2977,9 @@ func (m *SongMutation) AddTagIDs(ids ...int) {
 }
 
 // RemoveTagIDs removes the tags edge to Tag by ids.
-func (m *SongMutation) RemoveTagIDs(ids ...int) {
+func (m *SongMutation) RemoveTagIDs(ids ...int64) {
 	if m.removedtags == nil {
-		m.removedtags = make(map[int]struct{})
+		m.removedtags = make(map[int64]struct{})
 	}
 	for i := range ids {
 		m.removedtags[ids[i]] = struct{}{}
@@ -2987,7 +2987,7 @@ func (m *SongMutation) RemoveTagIDs(ids ...int) {
 }
 
 // RemovedTags returns the removed ids of tags.
-func (m *SongMutation) RemovedTagsIDs() (ids []int) {
+func (m *SongMutation) RemovedTagsIDs() (ids []int64) {
 	for id := range m.removedtags {
 		ids = append(ids, id)
 	}
@@ -2995,7 +2995,7 @@ func (m *SongMutation) RemovedTagsIDs() (ids []int) {
 }
 
 // TagsIDs returns the tags ids in the mutation.
-func (m *SongMutation) TagsIDs() (ids []int) {
+func (m *SongMutation) TagsIDs() (ids []int64) {
 	for id := range m.tags {
 		ids = append(ids, id)
 	}
@@ -4509,11 +4509,11 @@ type TagMutation struct {
 	config
 	op            Op
 	typ           string
-	id            *int
+	id            *int64
 	name          *string
 	clearedFields map[string]struct{}
-	songs         map[int]struct{}
-	removedsongs  map[int]struct{}
+	songs         map[int64]struct{}
+	removedsongs  map[int64]struct{}
 	done          bool
 	oldValue      func(context.Context) (*Tag, error)
 }
@@ -4538,7 +4538,7 @@ func newTagMutation(c config, op Op, opts ...tagOption) *TagMutation {
 }
 
 // withTagID sets the id field of the mutation.
-func withTagID(id int) tagOption {
+func withTagID(id int64) tagOption {
 	return func(m *TagMutation) {
 		var (
 			err   error
@@ -4590,7 +4590,7 @@ func (m TagMutation) Tx() (*Tx, error) {
 
 // ID returns the id value in the mutation. Note that, the id
 // is available only if it was provided to the builder.
-func (m *TagMutation) ID() (id int, exists bool) {
+func (m *TagMutation) ID() (id int64, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -4635,9 +4635,9 @@ func (m *TagMutation) ResetName() {
 }
 
 // AddSongIDs adds the songs edge to Song by ids.
-func (m *TagMutation) AddSongIDs(ids ...int) {
+func (m *TagMutation) AddSongIDs(ids ...int64) {
 	if m.songs == nil {
-		m.songs = make(map[int]struct{})
+		m.songs = make(map[int64]struct{})
 	}
 	for i := range ids {
 		m.songs[ids[i]] = struct{}{}
@@ -4645,9 +4645,9 @@ func (m *TagMutation) AddSongIDs(ids ...int) {
 }
 
 // RemoveSongIDs removes the songs edge to Song by ids.
-func (m *TagMutation) RemoveSongIDs(ids ...int) {
+func (m *TagMutation) RemoveSongIDs(ids ...int64) {
 	if m.removedsongs == nil {
-		m.removedsongs = make(map[int]struct{})
+		m.removedsongs = make(map[int64]struct{})
 	}
 	for i := range ids {
 		m.removedsongs[ids[i]] = struct{}{}
@@ -4655,7 +4655,7 @@ func (m *TagMutation) RemoveSongIDs(ids ...int) {
 }
 
 // RemovedSongs returns the removed ids of songs.
-func (m *TagMutation) RemovedSongsIDs() (ids []int) {
+func (m *TagMutation) RemovedSongsIDs() (ids []int64) {
 	for id := range m.removedsongs {
 		ids = append(ids, id)
 	}
@@ -4663,7 +4663,7 @@ func (m *TagMutation) RemovedSongsIDs() (ids []int) {
 }
 
 // SongsIDs returns the songs ids in the mutation.
-func (m *TagMutation) SongsIDs() (ids []int) {
+func (m *TagMutation) SongsIDs() (ids []int64) {
 	for id := range m.songs {
 		ids = append(ids, id)
 	}

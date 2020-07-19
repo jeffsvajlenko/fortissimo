@@ -5,6 +5,6 @@ package runtime
 // The schema-stitching logic is generated in github.com/jeffsvajlenko/fortissimo/server/ent/runtime.go
 
 const (
-	Version = "v0.2.5"                                          // Version of ent codegen.
-	Sum     = "h1:VMw6rOhxKWeKpIMTzJCFswoECr4Wm8gvWIlqNz3L95c=" // Sum of ent codegen.
+	Version = "v0.2.7"                                          // Version of ent codegen.
+	Sum     = "h1:8aBKtC2cBnjbu2y0LnHHYhfJhWXHVvyCbxtNO6jyBm4=" // Sum of ent codegen.
 )

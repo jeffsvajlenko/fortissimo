@@ -27,14 +27,14 @@ func (tc *TagCreate) SetName(s string) *TagCreate {
 }
 
 // AddSongIDs adds the songs edge to Song by ids.
-func (tc *TagCreate) AddSongIDs(ids ...int) *TagCreate {
+func (tc *TagCreate) AddSongIDs(ids ...int64) *TagCreate {
 	tc.mutation.AddSongIDs(ids...)
 	return tc
 }
 
 // AddSongs adds the songs edges to Song.
 func (tc *TagCreate) AddSongs(s ...*Song) *TagCreate {
-	ids := make([]int, len(s))
+	ids := make([]int64, len(s))
 	for i := range s {
 		ids[i] = s[i].ID
 	}
@@ -88,12 +88,25 @@ func (tc *TagCreate) SaveX(ctx context.Context) *Tag {
 }
 
 func (tc *TagCreate) sqlSave(ctx context.Context) (*Tag, error) {
+	t, _spec := tc.createSpec()
+	if err := sqlgraph.CreateNode(ctx, tc.driver, _spec); err != nil {
+		if cerr, ok := isSQLConstraintError(err); ok {
+			err = cerr
+		}
+		return nil, err
+	}
+	id := _spec.ID.Value.(int64)
+	t.ID = int64(id)
+	return t, nil
+}
+
+func (tc *TagCreate) createSpec() (*Tag, *sqlgraph.CreateSpec) {
 	var (
 		t     = &Tag{config: tc.config}
 		_spec = &sqlgraph.CreateSpec{
 			Table: tag.Table,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
+				Type:   field.TypeInt64,
 				Column: tag.FieldID,
 			},
 		}
@@ -115,7 +128,7 @@ func (tc *TagCreate) sqlSave(ctx context.Context) (*Tag, error) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeInt,
+					Type:   field.TypeInt64,
 					Column: song.FieldID,
 				},
 			},
@@ -125,13 +138,5 @@ func (tc *TagCreate) sqlSave(ctx context.Context) (*Tag, error) {
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if err := sqlgraph.CreateNode(ctx, tc.driver, _spec); err != nil {
-		if cerr, ok := isSQLConstraintError(err); ok {
-			err = cerr
-		}
-		return nil, err
-	}
-	id := _spec.ID.Value.(int64)
-	t.ID = int(id)
-	return t, nil
+	return t, _spec
 }

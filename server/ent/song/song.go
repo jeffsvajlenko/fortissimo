@@ -9,6 +9,8 @@ const (
 	FieldID = "id"
 	// FieldPath holds the string denoting the path field in the database.
 	FieldPath = "path"
+	// FieldHash holds the string denoting the hash field in the database.
+	FieldHash = "hash"
 	// FieldTitle holds the string denoting the title field in the database.
 	FieldTitle = "title"
 	// FieldTitleSort holds the string denoting the title_sort field in the database.
@@ -109,6 +111,10 @@ const (
 	FieldReplayGainTrackPeak = "replay_gain_track_peak"
 	// FieldMimeType holds the string denoting the mime_type field in the database.
 	FieldMimeType = "mime_type"
+	// FieldCreatedDate holds the string denoting the created_date field in the database.
+	FieldCreatedDate = "created_date"
+	// FieldModifiedDate holds the string denoting the modified_date field in the database.
+	FieldModifiedDate = "modified_date"
 
 	// EdgeTags holds the string denoting the tags edge name in mutations.
 	EdgeTags = "tags"
@@ -126,6 +132,7 @@ const (
 var Columns = []string{
 	FieldID,
 	FieldPath,
+	FieldHash,
 	FieldTitle,
 	FieldTitleSort,
 	FieldArtists,
@@ -176,6 +183,8 @@ var Columns = []string{
 	FieldReplayGainTrackGain,
 	FieldReplayGainTrackPeak,
 	FieldMimeType,
+	FieldCreatedDate,
+	FieldModifiedDate,
 }
 
 var (

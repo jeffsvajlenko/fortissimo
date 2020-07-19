@@ -35,6 +35,12 @@ func (su *SongUpdate) SetPath(s string) *SongUpdate {
 	return su
 }
 
+// SetHash sets the hash field.
+func (su *SongUpdate) SetHash(s string) *SongUpdate {
+	su.mutation.SetHash(s)
+	return su
+}
+
 // SetTitle sets the title field.
 func (su *SongUpdate) SetTitle(s string) *SongUpdate {
 	su.mutation.SetTitle(s)
@@ -1106,6 +1112,46 @@ func (su *SongUpdate) ClearMimeType() *SongUpdate {
 	return su
 }
 
+// SetCreatedDate sets the created_date field.
+func (su *SongUpdate) SetCreatedDate(t time.Time) *SongUpdate {
+	su.mutation.SetCreatedDate(t)
+	return su
+}
+
+// SetNillableCreatedDate sets the created_date field if the given value is not nil.
+func (su *SongUpdate) SetNillableCreatedDate(t *time.Time) *SongUpdate {
+	if t != nil {
+		su.SetCreatedDate(*t)
+	}
+	return su
+}
+
+// ClearCreatedDate clears the value of created_date.
+func (su *SongUpdate) ClearCreatedDate() *SongUpdate {
+	su.mutation.ClearCreatedDate()
+	return su
+}
+
+// SetModifiedDate sets the modified_date field.
+func (su *SongUpdate) SetModifiedDate(t time.Time) *SongUpdate {
+	su.mutation.SetModifiedDate(t)
+	return su
+}
+
+// SetNillableModifiedDate sets the modified_date field if the given value is not nil.
+func (su *SongUpdate) SetNillableModifiedDate(t *time.Time) *SongUpdate {
+	if t != nil {
+		su.SetModifiedDate(*t)
+	}
+	return su
+}
+
+// ClearModifiedDate clears the value of modified_date.
+func (su *SongUpdate) ClearModifiedDate() *SongUpdate {
+	su.mutation.ClearModifiedDate()
+	return su
+}
+
 // AddTagIDs adds the tags edge to Tag by ids.
 func (su *SongUpdate) AddTagIDs(ids ...int64) *SongUpdate {
 	su.mutation.AddTagIDs(ids...)
@@ -1216,6 +1262,13 @@ func (su *SongUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Type:   field.TypeString,
 			Value:  value,
 			Column: song.FieldPath,
+		})
+	}
+	if value, ok := su.mutation.Hash(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: song.FieldHash,
 		})
 	}
 	if value, ok := su.mutation.Title(); ok {
@@ -1947,6 +2000,32 @@ func (su *SongUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: song.FieldMimeType,
 		})
 	}
+	if value, ok := su.mutation.CreatedDate(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: song.FieldCreatedDate,
+		})
+	}
+	if su.mutation.CreatedDateCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Column: song.FieldCreatedDate,
+		})
+	}
+	if value, ok := su.mutation.ModifiedDate(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: song.FieldModifiedDate,
+		})
+	}
+	if su.mutation.ModifiedDateCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Column: song.FieldModifiedDate,
+		})
+	}
 	if nodes := su.mutation.RemovedTagsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2M,
@@ -2006,6 +2085,12 @@ type SongUpdateOne struct {
 // SetPath sets the path field.
 func (suo *SongUpdateOne) SetPath(s string) *SongUpdateOne {
 	suo.mutation.SetPath(s)
+	return suo
+}
+
+// SetHash sets the hash field.
+func (suo *SongUpdateOne) SetHash(s string) *SongUpdateOne {
+	suo.mutation.SetHash(s)
 	return suo
 }
 
@@ -3080,6 +3165,46 @@ func (suo *SongUpdateOne) ClearMimeType() *SongUpdateOne {
 	return suo
 }
 
+// SetCreatedDate sets the created_date field.
+func (suo *SongUpdateOne) SetCreatedDate(t time.Time) *SongUpdateOne {
+	suo.mutation.SetCreatedDate(t)
+	return suo
+}
+
+// SetNillableCreatedDate sets the created_date field if the given value is not nil.
+func (suo *SongUpdateOne) SetNillableCreatedDate(t *time.Time) *SongUpdateOne {
+	if t != nil {
+		suo.SetCreatedDate(*t)
+	}
+	return suo
+}
+
+// ClearCreatedDate clears the value of created_date.
+func (suo *SongUpdateOne) ClearCreatedDate() *SongUpdateOne {
+	suo.mutation.ClearCreatedDate()
+	return suo
+}
+
+// SetModifiedDate sets the modified_date field.
+func (suo *SongUpdateOne) SetModifiedDate(t time.Time) *SongUpdateOne {
+	suo.mutation.SetModifiedDate(t)
+	return suo
+}
+
+// SetNillableModifiedDate sets the modified_date field if the given value is not nil.
+func (suo *SongUpdateOne) SetNillableModifiedDate(t *time.Time) *SongUpdateOne {
+	if t != nil {
+		suo.SetModifiedDate(*t)
+	}
+	return suo
+}
+
+// ClearModifiedDate clears the value of modified_date.
+func (suo *SongUpdateOne) ClearModifiedDate() *SongUpdateOne {
+	suo.mutation.ClearModifiedDate()
+	return suo
+}
+
 // AddTagIDs adds the tags edge to Tag by ids.
 func (suo *SongUpdateOne) AddTagIDs(ids ...int64) *SongUpdateOne {
 	suo.mutation.AddTagIDs(ids...)
@@ -3188,6 +3313,13 @@ func (suo *SongUpdateOne) sqlSave(ctx context.Context) (s *Song, err error) {
 			Type:   field.TypeString,
 			Value:  value,
 			Column: song.FieldPath,
+		})
+	}
+	if value, ok := suo.mutation.Hash(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: song.FieldHash,
 		})
 	}
 	if value, ok := suo.mutation.Title(); ok {
@@ -3917,6 +4049,32 @@ func (suo *SongUpdateOne) sqlSave(ctx context.Context) (s *Song, err error) {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Column: song.FieldMimeType,
+		})
+	}
+	if value, ok := suo.mutation.CreatedDate(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: song.FieldCreatedDate,
+		})
+	}
+	if suo.mutation.CreatedDateCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Column: song.FieldCreatedDate,
+		})
+	}
+	if value, ok := suo.mutation.ModifiedDate(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: song.FieldModifiedDate,
+		})
+	}
+	if suo.mutation.ModifiedDateCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Column: song.FieldModifiedDate,
 		})
 	}
 	if nodes := suo.mutation.RemovedTagsIDs(); len(nodes) > 0 {

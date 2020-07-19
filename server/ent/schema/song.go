@@ -14,9 +14,8 @@ type Song struct {
 // Fields of the Song.
 func (Song) Fields() []ent.Field {
 	return []ent.Field{
-
 		field.String("path"),
-
+		field.String("hash"),
 		field.String("title").
 			Optional(),
 		field.String("title_sort").
@@ -116,6 +115,10 @@ func (Song) Fields() []ent.Field {
 		field.Float("replay_gain_track_peak").
 			Optional(),
 		field.String("mime_type").
+			Optional(),
+		field.Time("created_date").
+			Optional(),
+		field.Time("modified_date").
 			Optional(),
 	}
 }

@@ -27,6 +27,12 @@ func (sc *SongCreate) SetPath(s string) *SongCreate {
 	return sc
 }
 
+// SetHash sets the hash field.
+func (sc *SongCreate) SetHash(s string) *SongCreate {
+	sc.mutation.SetHash(s)
+	return sc
+}
+
 // SetTitle sets the title field.
 func (sc *SongCreate) SetTitle(s string) *SongCreate {
 	sc.mutation.SetTitle(s)
@@ -719,6 +725,34 @@ func (sc *SongCreate) SetNillableMimeType(s *string) *SongCreate {
 	return sc
 }
 
+// SetCreatedDate sets the created_date field.
+func (sc *SongCreate) SetCreatedDate(t time.Time) *SongCreate {
+	sc.mutation.SetCreatedDate(t)
+	return sc
+}
+
+// SetNillableCreatedDate sets the created_date field if the given value is not nil.
+func (sc *SongCreate) SetNillableCreatedDate(t *time.Time) *SongCreate {
+	if t != nil {
+		sc.SetCreatedDate(*t)
+	}
+	return sc
+}
+
+// SetModifiedDate sets the modified_date field.
+func (sc *SongCreate) SetModifiedDate(t time.Time) *SongCreate {
+	sc.mutation.SetModifiedDate(t)
+	return sc
+}
+
+// SetNillableModifiedDate sets the modified_date field if the given value is not nil.
+func (sc *SongCreate) SetNillableModifiedDate(t *time.Time) *SongCreate {
+	if t != nil {
+		sc.SetModifiedDate(*t)
+	}
+	return sc
+}
+
 // AddTagIDs adds the tags edge to Tag by ids.
 func (sc *SongCreate) AddTagIDs(ids ...int64) *SongCreate {
 	sc.mutation.AddTagIDs(ids...)
@@ -743,6 +777,9 @@ func (sc *SongCreate) Mutation() *SongMutation {
 func (sc *SongCreate) Save(ctx context.Context) (*Song, error) {
 	if _, ok := sc.mutation.Path(); !ok {
 		return nil, &ValidationError{Name: "path", err: errors.New("ent: missing required field \"path\"")}
+	}
+	if _, ok := sc.mutation.Hash(); !ok {
+		return nil, &ValidationError{Name: "hash", err: errors.New("ent: missing required field \"hash\"")}
 	}
 	if _, ok := sc.mutation.PlayCount(); !ok {
 		v := song.DefaultPlayCount
@@ -819,6 +856,14 @@ func (sc *SongCreate) createSpec() (*Song, *sqlgraph.CreateSpec) {
 			Column: song.FieldPath,
 		})
 		s.Path = value
+	}
+	if value, ok := sc.mutation.Hash(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: song.FieldHash,
+		})
+		s.Hash = value
 	}
 	if value, ok := sc.mutation.Title(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -1219,6 +1264,22 @@ func (sc *SongCreate) createSpec() (*Song, *sqlgraph.CreateSpec) {
 			Column: song.FieldMimeType,
 		})
 		s.MimeType = value
+	}
+	if value, ok := sc.mutation.CreatedDate(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: song.FieldCreatedDate,
+		})
+		s.CreatedDate = value
+	}
+	if value, ok := sc.mutation.ModifiedDate(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: song.FieldModifiedDate,
+		})
+		s.ModifiedDate = value
 	}
 	if nodes := sc.mutation.TagsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

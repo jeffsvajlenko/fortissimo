@@ -35,6 +35,7 @@ type SongMutation struct {
 	typ                            string
 	id                             *int64
 	path                           *string
+	hash                           *string
 	title                          *string
 	title_sort                     *string
 	artists                        *[]string
@@ -98,6 +99,8 @@ type SongMutation struct {
 	replay_gain_track_peak         *float64
 	addreplay_gain_track_peak      *float64
 	mime_type                      *string
+	created_date                   *time.Time
+	modified_date                  *time.Time
 	clearedFields                  map[string]struct{}
 	tags                           map[int64]struct{}
 	removedtags                    map[int64]struct{}
@@ -219,6 +222,43 @@ func (m *SongMutation) OldPath(ctx context.Context) (v string, err error) {
 // ResetPath reset all changes of the "path" field.
 func (m *SongMutation) ResetPath() {
 	m.path = nil
+}
+
+// SetHash sets the hash field.
+func (m *SongMutation) SetHash(s string) {
+	m.hash = &s
+}
+
+// Hash returns the hash value in the mutation.
+func (m *SongMutation) Hash() (r string, exists bool) {
+	v := m.hash
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldHash returns the old hash value of the Song.
+// If the Song object wasn't provided to the builder, the object is fetched
+// from the database.
+// An error is returned if the mutation operation is not UpdateOne, or database query fails.
+func (m *SongMutation) OldHash(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldHash is allowed only on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldHash requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldHash: %w", err)
+	}
+	return oldValue.Hash, nil
+}
+
+// ResetHash reset all changes of the "hash" field.
+func (m *SongMutation) ResetHash() {
+	m.hash = nil
 }
 
 // SetTitle sets the title field.
@@ -2966,6 +3006,106 @@ func (m *SongMutation) ResetMimeType() {
 	delete(m.clearedFields, song.FieldMimeType)
 }
 
+// SetCreatedDate sets the created_date field.
+func (m *SongMutation) SetCreatedDate(t time.Time) {
+	m.created_date = &t
+}
+
+// CreatedDate returns the created_date value in the mutation.
+func (m *SongMutation) CreatedDate() (r time.Time, exists bool) {
+	v := m.created_date
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreatedDate returns the old created_date value of the Song.
+// If the Song object wasn't provided to the builder, the object is fetched
+// from the database.
+// An error is returned if the mutation operation is not UpdateOne, or database query fails.
+func (m *SongMutation) OldCreatedDate(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldCreatedDate is allowed only on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldCreatedDate requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreatedDate: %w", err)
+	}
+	return oldValue.CreatedDate, nil
+}
+
+// ClearCreatedDate clears the value of created_date.
+func (m *SongMutation) ClearCreatedDate() {
+	m.created_date = nil
+	m.clearedFields[song.FieldCreatedDate] = struct{}{}
+}
+
+// CreatedDateCleared returns if the field created_date was cleared in this mutation.
+func (m *SongMutation) CreatedDateCleared() bool {
+	_, ok := m.clearedFields[song.FieldCreatedDate]
+	return ok
+}
+
+// ResetCreatedDate reset all changes of the "created_date" field.
+func (m *SongMutation) ResetCreatedDate() {
+	m.created_date = nil
+	delete(m.clearedFields, song.FieldCreatedDate)
+}
+
+// SetModifiedDate sets the modified_date field.
+func (m *SongMutation) SetModifiedDate(t time.Time) {
+	m.modified_date = &t
+}
+
+// ModifiedDate returns the modified_date value in the mutation.
+func (m *SongMutation) ModifiedDate() (r time.Time, exists bool) {
+	v := m.modified_date
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldModifiedDate returns the old modified_date value of the Song.
+// If the Song object wasn't provided to the builder, the object is fetched
+// from the database.
+// An error is returned if the mutation operation is not UpdateOne, or database query fails.
+func (m *SongMutation) OldModifiedDate(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldModifiedDate is allowed only on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldModifiedDate requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldModifiedDate: %w", err)
+	}
+	return oldValue.ModifiedDate, nil
+}
+
+// ClearModifiedDate clears the value of modified_date.
+func (m *SongMutation) ClearModifiedDate() {
+	m.modified_date = nil
+	m.clearedFields[song.FieldModifiedDate] = struct{}{}
+}
+
+// ModifiedDateCleared returns if the field modified_date was cleared in this mutation.
+func (m *SongMutation) ModifiedDateCleared() bool {
+	_, ok := m.clearedFields[song.FieldModifiedDate]
+	return ok
+}
+
+// ResetModifiedDate reset all changes of the "modified_date" field.
+func (m *SongMutation) ResetModifiedDate() {
+	m.modified_date = nil
+	delete(m.clearedFields, song.FieldModifiedDate)
+}
+
 // AddTagIDs adds the tags edge to Tag by ids.
 func (m *SongMutation) AddTagIDs(ids ...int64) {
 	if m.tags == nil {
@@ -3022,9 +3162,12 @@ func (m *SongMutation) Type() string {
 // this mutation. Note that, in order to get all numeric
 // fields that were in/decremented, call AddedFields().
 func (m *SongMutation) Fields() []string {
-	fields := make([]string, 0, 51)
+	fields := make([]string, 0, 54)
 	if m.path != nil {
 		fields = append(fields, song.FieldPath)
+	}
+	if m.hash != nil {
+		fields = append(fields, song.FieldHash)
 	}
 	if m.title != nil {
 		fields = append(fields, song.FieldTitle)
@@ -3176,6 +3319,12 @@ func (m *SongMutation) Fields() []string {
 	if m.mime_type != nil {
 		fields = append(fields, song.FieldMimeType)
 	}
+	if m.created_date != nil {
+		fields = append(fields, song.FieldCreatedDate)
+	}
+	if m.modified_date != nil {
+		fields = append(fields, song.FieldModifiedDate)
+	}
 	return fields
 }
 
@@ -3186,6 +3335,8 @@ func (m *SongMutation) Field(name string) (ent.Value, bool) {
 	switch name {
 	case song.FieldPath:
 		return m.Path()
+	case song.FieldHash:
+		return m.Hash()
 	case song.FieldTitle:
 		return m.Title()
 	case song.FieldTitleSort:
@@ -3286,6 +3437,10 @@ func (m *SongMutation) Field(name string) (ent.Value, bool) {
 		return m.ReplayGainTrackPeak()
 	case song.FieldMimeType:
 		return m.MimeType()
+	case song.FieldCreatedDate:
+		return m.CreatedDate()
+	case song.FieldModifiedDate:
+		return m.ModifiedDate()
 	}
 	return nil, false
 }
@@ -3297,6 +3452,8 @@ func (m *SongMutation) OldField(ctx context.Context, name string) (ent.Value, er
 	switch name {
 	case song.FieldPath:
 		return m.OldPath(ctx)
+	case song.FieldHash:
+		return m.OldHash(ctx)
 	case song.FieldTitle:
 		return m.OldTitle(ctx)
 	case song.FieldTitleSort:
@@ -3397,6 +3554,10 @@ func (m *SongMutation) OldField(ctx context.Context, name string) (ent.Value, er
 		return m.OldReplayGainTrackPeak(ctx)
 	case song.FieldMimeType:
 		return m.OldMimeType(ctx)
+	case song.FieldCreatedDate:
+		return m.OldCreatedDate(ctx)
+	case song.FieldModifiedDate:
+		return m.OldModifiedDate(ctx)
 	}
 	return nil, fmt.Errorf("unknown Song field %s", name)
 }
@@ -3412,6 +3573,13 @@ func (m *SongMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetPath(v)
+		return nil
+	case song.FieldHash:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetHash(v)
 		return nil
 	case song.FieldTitle:
 		v, ok := value.(string)
@@ -3763,6 +3931,20 @@ func (m *SongMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetMimeType(v)
 		return nil
+	case song.FieldCreatedDate:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreatedDate(v)
+		return nil
+	case song.FieldModifiedDate:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetModifiedDate(v)
+		return nil
 	}
 	return fmt.Errorf("unknown Song field %s", name)
 }
@@ -4096,6 +4278,12 @@ func (m *SongMutation) ClearedFields() []string {
 	if m.FieldCleared(song.FieldMimeType) {
 		fields = append(fields, song.FieldMimeType)
 	}
+	if m.FieldCleared(song.FieldCreatedDate) {
+		fields = append(fields, song.FieldCreatedDate)
+	}
+	if m.FieldCleared(song.FieldModifiedDate) {
+		fields = append(fields, song.FieldModifiedDate)
+	}
 	return fields
 }
 
@@ -4254,6 +4442,12 @@ func (m *SongMutation) ClearField(name string) error {
 	case song.FieldMimeType:
 		m.ClearMimeType()
 		return nil
+	case song.FieldCreatedDate:
+		m.ClearCreatedDate()
+		return nil
+	case song.FieldModifiedDate:
+		m.ClearModifiedDate()
+		return nil
 	}
 	return fmt.Errorf("unknown Song nullable field %s", name)
 }
@@ -4265,6 +4459,9 @@ func (m *SongMutation) ResetField(name string) error {
 	switch name {
 	case song.FieldPath:
 		m.ResetPath()
+		return nil
+	case song.FieldHash:
+		m.ResetHash()
 		return nil
 	case song.FieldTitle:
 		m.ResetTitle()
@@ -4415,6 +4612,12 @@ func (m *SongMutation) ResetField(name string) error {
 		return nil
 	case song.FieldMimeType:
 		m.ResetMimeType()
+		return nil
+	case song.FieldCreatedDate:
+		m.ResetCreatedDate()
+		return nil
+	case song.FieldModifiedDate:
+		m.ResetModifiedDate()
 		return nil
 	}
 	return fmt.Errorf("unknown Song field %s", name)

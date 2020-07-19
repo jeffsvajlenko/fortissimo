@@ -100,6 +100,13 @@ func Path(v string) predicate.Song {
 	})
 }
 
+// Hash applies equality check predicate on the "hash" field. It's identical to HashEQ.
+func Hash(v string) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldHash), v))
+	})
+}
+
 // Title applies equality check predicate on the "title" field. It's identical to TitleEQ.
 func Title(v string) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
@@ -443,6 +450,20 @@ func MimeType(v string) predicate.Song {
 	})
 }
 
+// CreatedDate applies equality check predicate on the "created_date" field. It's identical to CreatedDateEQ.
+func CreatedDate(v time.Time) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldCreatedDate), v))
+	})
+}
+
+// ModifiedDate applies equality check predicate on the "modified_date" field. It's identical to ModifiedDateEQ.
+func ModifiedDate(v time.Time) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldModifiedDate), v))
+	})
+}
+
 // PathEQ applies the EQ predicate on the "path" field.
 func PathEQ(v string) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
@@ -551,6 +572,117 @@ func PathEqualFold(v string) predicate.Song {
 func PathContainsFold(v string) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldPath), v))
+	})
+}
+
+// HashEQ applies the EQ predicate on the "hash" field.
+func HashEQ(v string) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldHash), v))
+	})
+}
+
+// HashNEQ applies the NEQ predicate on the "hash" field.
+func HashNEQ(v string) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldHash), v))
+	})
+}
+
+// HashIn applies the In predicate on the "hash" field.
+func HashIn(vs ...string) predicate.Song {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Song(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldHash), v...))
+	})
+}
+
+// HashNotIn applies the NotIn predicate on the "hash" field.
+func HashNotIn(vs ...string) predicate.Song {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Song(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldHash), v...))
+	})
+}
+
+// HashGT applies the GT predicate on the "hash" field.
+func HashGT(v string) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldHash), v))
+	})
+}
+
+// HashGTE applies the GTE predicate on the "hash" field.
+func HashGTE(v string) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldHash), v))
+	})
+}
+
+// HashLT applies the LT predicate on the "hash" field.
+func HashLT(v string) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldHash), v))
+	})
+}
+
+// HashLTE applies the LTE predicate on the "hash" field.
+func HashLTE(v string) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldHash), v))
+	})
+}
+
+// HashContains applies the Contains predicate on the "hash" field.
+func HashContains(v string) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldHash), v))
+	})
+}
+
+// HashHasPrefix applies the HasPrefix predicate on the "hash" field.
+func HashHasPrefix(v string) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldHash), v))
+	})
+}
+
+// HashHasSuffix applies the HasSuffix predicate on the "hash" field.
+func HashHasSuffix(v string) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldHash), v))
+	})
+}
+
+// HashEqualFold applies the EqualFold predicate on the "hash" field.
+func HashEqualFold(v string) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldHash), v))
+	})
+}
+
+// HashContainsFold applies the ContainsFold predicate on the "hash" field.
+func HashContainsFold(v string) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldHash), v))
 	})
 }
 
@@ -6172,6 +6304,186 @@ func MimeTypeEqualFold(v string) predicate.Song {
 func MimeTypeContainsFold(v string) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldMimeType), v))
+	})
+}
+
+// CreatedDateEQ applies the EQ predicate on the "created_date" field.
+func CreatedDateEQ(v time.Time) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldCreatedDate), v))
+	})
+}
+
+// CreatedDateNEQ applies the NEQ predicate on the "created_date" field.
+func CreatedDateNEQ(v time.Time) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldCreatedDate), v))
+	})
+}
+
+// CreatedDateIn applies the In predicate on the "created_date" field.
+func CreatedDateIn(vs ...time.Time) predicate.Song {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Song(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldCreatedDate), v...))
+	})
+}
+
+// CreatedDateNotIn applies the NotIn predicate on the "created_date" field.
+func CreatedDateNotIn(vs ...time.Time) predicate.Song {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Song(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldCreatedDate), v...))
+	})
+}
+
+// CreatedDateGT applies the GT predicate on the "created_date" field.
+func CreatedDateGT(v time.Time) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldCreatedDate), v))
+	})
+}
+
+// CreatedDateGTE applies the GTE predicate on the "created_date" field.
+func CreatedDateGTE(v time.Time) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldCreatedDate), v))
+	})
+}
+
+// CreatedDateLT applies the LT predicate on the "created_date" field.
+func CreatedDateLT(v time.Time) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldCreatedDate), v))
+	})
+}
+
+// CreatedDateLTE applies the LTE predicate on the "created_date" field.
+func CreatedDateLTE(v time.Time) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldCreatedDate), v))
+	})
+}
+
+// CreatedDateIsNil applies the IsNil predicate on the "created_date" field.
+func CreatedDateIsNil() predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldCreatedDate)))
+	})
+}
+
+// CreatedDateNotNil applies the NotNil predicate on the "created_date" field.
+func CreatedDateNotNil() predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldCreatedDate)))
+	})
+}
+
+// ModifiedDateEQ applies the EQ predicate on the "modified_date" field.
+func ModifiedDateEQ(v time.Time) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldModifiedDate), v))
+	})
+}
+
+// ModifiedDateNEQ applies the NEQ predicate on the "modified_date" field.
+func ModifiedDateNEQ(v time.Time) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldModifiedDate), v))
+	})
+}
+
+// ModifiedDateIn applies the In predicate on the "modified_date" field.
+func ModifiedDateIn(vs ...time.Time) predicate.Song {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Song(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldModifiedDate), v...))
+	})
+}
+
+// ModifiedDateNotIn applies the NotIn predicate on the "modified_date" field.
+func ModifiedDateNotIn(vs ...time.Time) predicate.Song {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Song(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldModifiedDate), v...))
+	})
+}
+
+// ModifiedDateGT applies the GT predicate on the "modified_date" field.
+func ModifiedDateGT(v time.Time) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldModifiedDate), v))
+	})
+}
+
+// ModifiedDateGTE applies the GTE predicate on the "modified_date" field.
+func ModifiedDateGTE(v time.Time) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldModifiedDate), v))
+	})
+}
+
+// ModifiedDateLT applies the LT predicate on the "modified_date" field.
+func ModifiedDateLT(v time.Time) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldModifiedDate), v))
+	})
+}
+
+// ModifiedDateLTE applies the LTE predicate on the "modified_date" field.
+func ModifiedDateLTE(v time.Time) predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldModifiedDate), v))
+	})
+}
+
+// ModifiedDateIsNil applies the IsNil predicate on the "modified_date" field.
+func ModifiedDateIsNil() predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldModifiedDate)))
+	})
+}
+
+// ModifiedDateNotNil applies the NotNil predicate on the "modified_date" field.
+func ModifiedDateNotNil() predicate.Song {
+	return predicate.Song(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldModifiedDate)))
 	})
 }
 

@@ -12,6 +12,7 @@ var (
 	SongsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
 		{Name: "path", Type: field.TypeString},
+		{Name: "hash", Type: field.TypeString},
 		{Name: "title", Type: field.TypeString, Nullable: true},
 		{Name: "title_sort", Type: field.TypeString, Nullable: true},
 		{Name: "artists", Type: field.TypeJSON, Nullable: true},
@@ -62,6 +63,8 @@ var (
 		{Name: "replay_gain_track_gain", Type: field.TypeFloat64, Nullable: true},
 		{Name: "replay_gain_track_peak", Type: field.TypeFloat64, Nullable: true},
 		{Name: "mime_type", Type: field.TypeString, Nullable: true},
+		{Name: "created_date", Type: field.TypeTime, Nullable: true},
+		{Name: "modified_date", Type: field.TypeTime, Nullable: true},
 	}
 	// SongsTable holds the schema information for the "songs" table.
 	SongsTable = &schema.Table{

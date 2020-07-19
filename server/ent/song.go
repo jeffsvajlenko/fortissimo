@@ -19,6 +19,8 @@ type Song struct {
 	ID int64 `json:"id,omitempty"`
 	// Path holds the value of the "path" field.
 	Path string `json:"path,omitempty"`
+	// Hash holds the value of the "hash" field.
+	Hash string `json:"hash,omitempty"`
 	// Title holds the value of the "title" field.
 	Title string `json:"title,omitempty"`
 	// TitleSort holds the value of the "title_sort" field.
@@ -119,6 +121,10 @@ type Song struct {
 	ReplayGainTrackPeak float64 `json:"replay_gain_track_peak,omitempty"`
 	// MimeType holds the value of the "mime_type" field.
 	MimeType string `json:"mime_type,omitempty"`
+	// CreatedDate holds the value of the "created_date" field.
+	CreatedDate time.Time `json:"created_date,omitempty"`
+	// ModifiedDate holds the value of the "modified_date" field.
+	ModifiedDate time.Time `json:"modified_date,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SongQuery when eager-loading is set.
 	Edges SongEdges `json:"edges"`
@@ -147,6 +153,7 @@ func (*Song) scanValues() []interface{} {
 	return []interface{}{
 		&sql.NullInt64{},   // id
 		&sql.NullString{},  // path
+		&sql.NullString{},  // hash
 		&sql.NullString{},  // title
 		&sql.NullString{},  // title_sort
 		&[]byte{},          // artists
@@ -197,6 +204,8 @@ func (*Song) scanValues() []interface{} {
 		&sql.NullFloat64{}, // replay_gain_track_gain
 		&sql.NullFloat64{}, // replay_gain_track_peak
 		&sql.NullString{},  // mime_type
+		&sql.NullTime{},    // created_date
+		&sql.NullTime{},    // modified_date
 	}
 }
 
@@ -218,257 +227,272 @@ func (s *Song) assignValues(values ...interface{}) error {
 		s.Path = value.String
 	}
 	if value, ok := values[1].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field title", values[1])
+		return fmt.Errorf("unexpected type %T for field hash", values[1])
+	} else if value.Valid {
+		s.Hash = value.String
+	}
+	if value, ok := values[2].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field title", values[2])
 	} else if value.Valid {
 		s.Title = value.String
 	}
-	if value, ok := values[2].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field title_sort", values[2])
+	if value, ok := values[3].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field title_sort", values[3])
 	} else if value.Valid {
 		s.TitleSort = value.String
 	}
 
-	if value, ok := values[3].(*[]byte); !ok {
-		return fmt.Errorf("unexpected type %T for field artists", values[3])
+	if value, ok := values[4].(*[]byte); !ok {
+		return fmt.Errorf("unexpected type %T for field artists", values[4])
 	} else if value != nil && len(*value) > 0 {
 		if err := json.Unmarshal(*value, &s.Artists); err != nil {
 			return fmt.Errorf("unmarshal field artists: %v", err)
 		}
 	}
-	if value, ok := values[4].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field first_artist", values[4])
+	if value, ok := values[5].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field first_artist", values[5])
 	} else if value.Valid {
 		s.FirstArtist = value.String
 	}
-	if value, ok := values[5].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field first_artist_sort", values[5])
+	if value, ok := values[6].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field first_artist_sort", values[6])
 	} else if value.Valid {
 		s.FirstArtistSort = value.String
 	}
-	if value, ok := values[6].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field first_album_artist", values[6])
+	if value, ok := values[7].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field first_album_artist", values[7])
 	} else if value.Valid {
 		s.FirstAlbumArtist = value.String
 	}
-	if value, ok := values[7].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field first_album_artist_sort", values[7])
+	if value, ok := values[8].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field first_album_artist_sort", values[8])
 	} else if value.Valid {
 		s.FirstAlbumArtistSort = value.String
 	}
-	if value, ok := values[8].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field album_artist", values[8])
+	if value, ok := values[9].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field album_artist", values[9])
 	} else if value.Valid {
 		s.AlbumArtist = value.String
 	}
-	if value, ok := values[9].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field album", values[9])
+	if value, ok := values[10].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field album", values[10])
 	} else if value.Valid {
 		s.Album = value.String
 	}
-	if value, ok := values[10].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field publisher", values[10])
+	if value, ok := values[11].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field publisher", values[11])
 	} else if value.Valid {
 		s.Publisher = value.String
 	}
-	if value, ok := values[11].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field first_composer", values[11])
+	if value, ok := values[12].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field first_composer", values[12])
 	} else if value.Valid {
 		s.FirstComposer = value.String
 	}
-	if value, ok := values[12].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field composers", values[12])
+	if value, ok := values[13].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field composers", values[13])
 	} else if value.Valid {
 		s.Composers = value.String
 	}
-	if value, ok := values[13].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field conductor", values[13])
+	if value, ok := values[14].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field conductor", values[14])
 	} else if value.Valid {
 		s.Conductor = value.String
 	}
-	if value, ok := values[14].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field genre", values[14])
+	if value, ok := values[15].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field genre", values[15])
 	} else if value.Valid {
 		s.Genre = value.String
 	}
-	if value, ok := values[15].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field grouping", values[15])
+	if value, ok := values[16].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field grouping", values[16])
 	} else if value.Valid {
 		s.Grouping = value.String
 	}
-	if value, ok := values[16].(*sql.NullInt64); !ok {
-		return fmt.Errorf("unexpected type %T for field year", values[16])
+	if value, ok := values[17].(*sql.NullInt64); !ok {
+		return fmt.Errorf("unexpected type %T for field year", values[17])
 	} else if value.Valid {
 		s.Year = uint32(value.Int64)
 	}
-	if value, ok := values[17].(*sql.NullInt64); !ok {
-		return fmt.Errorf("unexpected type %T for field track_number", values[17])
+	if value, ok := values[18].(*sql.NullInt64); !ok {
+		return fmt.Errorf("unexpected type %T for field track_number", values[18])
 	} else if value.Valid {
 		s.TrackNumber = uint32(value.Int64)
 	}
-	if value, ok := values[18].(*sql.NullInt64); !ok {
-		return fmt.Errorf("unexpected type %T for field of_track_number", values[18])
+	if value, ok := values[19].(*sql.NullInt64); !ok {
+		return fmt.Errorf("unexpected type %T for field of_track_number", values[19])
 	} else if value.Valid {
 		s.OfTrackNumber = uint32(value.Int64)
 	}
-	if value, ok := values[19].(*sql.NullInt64); !ok {
-		return fmt.Errorf("unexpected type %T for field disk_number", values[19])
+	if value, ok := values[20].(*sql.NullInt64); !ok {
+		return fmt.Errorf("unexpected type %T for field disk_number", values[20])
 	} else if value.Valid {
 		s.DiskNumber = uint32(value.Int64)
 	}
-	if value, ok := values[20].(*sql.NullInt64); !ok {
-		return fmt.Errorf("unexpected type %T for field of_disk_number", values[20])
+	if value, ok := values[21].(*sql.NullInt64); !ok {
+		return fmt.Errorf("unexpected type %T for field of_disk_number", values[21])
 	} else if value.Valid {
 		s.OfDiskNumber = uint32(value.Int64)
 	}
-	if value, ok := values[21].(*sql.NullInt64); !ok {
-		return fmt.Errorf("unexpected type %T for field duration", values[21])
+	if value, ok := values[22].(*sql.NullInt64); !ok {
+		return fmt.Errorf("unexpected type %T for field duration", values[22])
 	} else if value.Valid {
 		s.Duration = uint32(value.Int64)
 	}
-	if value, ok := values[22].(*sql.NullInt64); !ok {
-		return fmt.Errorf("unexpected type %T for field play_count", values[22])
+	if value, ok := values[23].(*sql.NullInt64); !ok {
+		return fmt.Errorf("unexpected type %T for field play_count", values[23])
 	} else if value.Valid {
 		s.PlayCount = uint32(value.Int64)
 	}
-	if value, ok := values[23].(*sql.NullInt64); !ok {
-		return fmt.Errorf("unexpected type %T for field skipped_count", values[23])
+	if value, ok := values[24].(*sql.NullInt64); !ok {
+		return fmt.Errorf("unexpected type %T for field skipped_count", values[24])
 	} else if value.Valid {
 		s.SkippedCount = uint32(value.Int64)
 	}
-	if value, ok := values[24].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field comment", values[24])
+	if value, ok := values[25].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field comment", values[25])
 	} else if value.Valid {
 		s.Comment = value.String
 	}
-	if value, ok := values[25].(*sql.NullInt64); !ok {
-		return fmt.Errorf("unexpected type %T for field beats_per_minute", values[25])
+	if value, ok := values[26].(*sql.NullInt64); !ok {
+		return fmt.Errorf("unexpected type %T for field beats_per_minute", values[26])
 	} else if value.Valid {
 		s.BeatsPerMinute = uint32(value.Int64)
 	}
-	if value, ok := values[26].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field copyright", values[26])
+	if value, ok := values[27].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field copyright", values[27])
 	} else if value.Valid {
 		s.Copyright = value.String
 	}
-	if value, ok := values[27].(*sql.NullTime); !ok {
-		return fmt.Errorf("unexpected type %T for field date_tagged", values[27])
+	if value, ok := values[28].(*sql.NullTime); !ok {
+		return fmt.Errorf("unexpected type %T for field date_tagged", values[28])
 	} else if value.Valid {
 		s.DateTagged = value.Time
 	}
-	if value, ok := values[28].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field description", values[28])
+	if value, ok := values[29].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field description", values[29])
 	} else if value.Valid {
 		s.Description = value.String
 	}
-	if value, ok := values[29].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field first_composer_sort", values[29])
+	if value, ok := values[30].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field first_composer_sort", values[30])
 	} else if value.Valid {
 		s.FirstComposerSort = value.String
 	}
-	if value, ok := values[30].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field artists_sort", values[30])
+	if value, ok := values[31].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field artists_sort", values[31])
 	} else if value.Valid {
 		s.ArtistsSort = value.String
 	}
-	if value, ok := values[31].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field lyrics", values[31])
+	if value, ok := values[32].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field lyrics", values[32])
 	} else if value.Valid {
 		s.Lyrics = value.String
 	}
-	if value, ok := values[32].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field initial_key", values[32])
+	if value, ok := values[33].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field initial_key", values[33])
 	} else if value.Valid {
 		s.InitialKey = value.String
 	}
-	if value, ok := values[33].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field isrc", values[33])
+	if value, ok := values[34].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field isrc", values[34])
 	} else if value.Valid {
 		s.Isrc = value.String
 	}
-	if value, ok := values[34].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field subtitle", values[34])
+	if value, ok := values[35].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field subtitle", values[35])
 	} else if value.Valid {
 		s.Subtitle = value.String
 	}
-	if value, ok := values[35].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field music_brainz_artist_id", values[35])
+	if value, ok := values[36].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field music_brainz_artist_id", values[36])
 	} else if value.Valid {
 		s.MusicBrainzArtistID = value.String
 	}
-	if value, ok := values[36].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field music_brainz_disc_id", values[36])
+	if value, ok := values[37].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field music_brainz_disc_id", values[37])
 	} else if value.Valid {
 		s.MusicBrainzDiscID = value.String
 	}
-	if value, ok := values[37].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field music_brainz_release_artist_id", values[37])
+	if value, ok := values[38].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field music_brainz_release_artist_id", values[38])
 	} else if value.Valid {
 		s.MusicBrainzReleaseArtistID = value.String
 	}
-	if value, ok := values[38].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field music_brainz_release_country", values[38])
+	if value, ok := values[39].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field music_brainz_release_country", values[39])
 	} else if value.Valid {
 		s.MusicBrainzReleaseCountry = value.String
 	}
-	if value, ok := values[39].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field music_brainz_release_group_id", values[39])
+	if value, ok := values[40].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field music_brainz_release_group_id", values[40])
 	} else if value.Valid {
 		s.MusicBrainzReleaseGroupID = value.String
 	}
-	if value, ok := values[40].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field music_brainz_release_id", values[40])
+	if value, ok := values[41].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field music_brainz_release_id", values[41])
 	} else if value.Valid {
 		s.MusicBrainzReleaseID = value.String
 	}
-	if value, ok := values[41].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field music_brainz_release_status", values[41])
+	if value, ok := values[42].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field music_brainz_release_status", values[42])
 	} else if value.Valid {
 		s.MusicBrainzReleaseStatus = value.String
 	}
-	if value, ok := values[42].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field music_brainz_release_type", values[42])
+	if value, ok := values[43].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field music_brainz_release_type", values[43])
 	} else if value.Valid {
 		s.MusicBrainzReleaseType = value.String
 	}
-	if value, ok := values[43].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field music_brainz_track_id", values[43])
+	if value, ok := values[44].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field music_brainz_track_id", values[44])
 	} else if value.Valid {
 		s.MusicBrainzTrackID = value.String
 	}
-	if value, ok := values[44].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field music_ip_id", values[44])
+	if value, ok := values[45].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field music_ip_id", values[45])
 	} else if value.Valid {
 		s.MusicIPID = value.String
 	}
-	if value, ok := values[45].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field remixed_by", values[45])
+	if value, ok := values[46].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field remixed_by", values[46])
 	} else if value.Valid {
 		s.RemixedBy = value.String
 	}
-	if value, ok := values[46].(*sql.NullFloat64); !ok {
-		return fmt.Errorf("unexpected type %T for field replay_gain_album_gain", values[46])
+	if value, ok := values[47].(*sql.NullFloat64); !ok {
+		return fmt.Errorf("unexpected type %T for field replay_gain_album_gain", values[47])
 	} else if value.Valid {
 		s.ReplayGainAlbumGain = value.Float64
 	}
-	if value, ok := values[47].(*sql.NullFloat64); !ok {
-		return fmt.Errorf("unexpected type %T for field replay_gain_album_peak", values[47])
+	if value, ok := values[48].(*sql.NullFloat64); !ok {
+		return fmt.Errorf("unexpected type %T for field replay_gain_album_peak", values[48])
 	} else if value.Valid {
 		s.ReplayGainAlbumPeak = value.Float64
 	}
-	if value, ok := values[48].(*sql.NullFloat64); !ok {
-		return fmt.Errorf("unexpected type %T for field replay_gain_track_gain", values[48])
+	if value, ok := values[49].(*sql.NullFloat64); !ok {
+		return fmt.Errorf("unexpected type %T for field replay_gain_track_gain", values[49])
 	} else if value.Valid {
 		s.ReplayGainTrackGain = value.Float64
 	}
-	if value, ok := values[49].(*sql.NullFloat64); !ok {
-		return fmt.Errorf("unexpected type %T for field replay_gain_track_peak", values[49])
+	if value, ok := values[50].(*sql.NullFloat64); !ok {
+		return fmt.Errorf("unexpected type %T for field replay_gain_track_peak", values[50])
 	} else if value.Valid {
 		s.ReplayGainTrackPeak = value.Float64
 	}
-	if value, ok := values[50].(*sql.NullString); !ok {
-		return fmt.Errorf("unexpected type %T for field mime_type", values[50])
+	if value, ok := values[51].(*sql.NullString); !ok {
+		return fmt.Errorf("unexpected type %T for field mime_type", values[51])
 	} else if value.Valid {
 		s.MimeType = value.String
+	}
+	if value, ok := values[52].(*sql.NullTime); !ok {
+		return fmt.Errorf("unexpected type %T for field created_date", values[52])
+	} else if value.Valid {
+		s.CreatedDate = value.Time
+	}
+	if value, ok := values[53].(*sql.NullTime); !ok {
+		return fmt.Errorf("unexpected type %T for field modified_date", values[53])
+	} else if value.Valid {
+		s.ModifiedDate = value.Time
 	}
 	return nil
 }
@@ -503,6 +527,8 @@ func (s *Song) String() string {
 	builder.WriteString(fmt.Sprintf("id=%v", s.ID))
 	builder.WriteString(", path=")
 	builder.WriteString(s.Path)
+	builder.WriteString(", hash=")
+	builder.WriteString(s.Hash)
 	builder.WriteString(", title=")
 	builder.WriteString(s.Title)
 	builder.WriteString(", title_sort=")
@@ -603,6 +629,10 @@ func (s *Song) String() string {
 	builder.WriteString(fmt.Sprintf("%v", s.ReplayGainTrackPeak))
 	builder.WriteString(", mime_type=")
 	builder.WriteString(s.MimeType)
+	builder.WriteString(", created_date=")
+	builder.WriteString(s.CreatedDate.Format(time.ANSIC))
+	builder.WriteString(", modified_date=")
+	builder.WriteString(s.ModifiedDate.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }

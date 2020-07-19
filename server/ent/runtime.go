@@ -14,11 +14,11 @@ func init() {
 	songFields := schema.Song{}.Fields()
 	_ = songFields
 	// songDescPlayCount is the schema descriptor for play_count field.
-	songDescPlayCount := songFields[22].Descriptor()
+	songDescPlayCount := songFields[23].Descriptor()
 	// song.DefaultPlayCount holds the default value on creation for the play_count field.
 	song.DefaultPlayCount = songDescPlayCount.Default.(uint32)
 	// songDescSkippedCount is the schema descriptor for skipped_count field.
-	songDescSkippedCount := songFields[23].Descriptor()
+	songDescSkippedCount := songFields[24].Descriptor()
 	// song.DefaultSkippedCount holds the default value on creation for the skipped_count field.
 	song.DefaultSkippedCount = songDescSkippedCount.Default.(uint32)
 }

@@ -10,18 +10,19 @@ import "google/protobuf/duration.proto";
 // Library Service
 service Fortissimo {
     rpc GetSong (GetSongRequest) returns (GetSongResponse);
+    rpc GetSongs (GetSongsRequest) returns (stream GetSongsResponse);
     rpc AddSong (AddSongRequest) returns (AddSongResponse);
     rpc RemoveSong (RemoveSongRequest) returns (RemoveSongResponse);
-
-    rpc GetSongs (GetSongsRequest) returns (stream GetSongsResponse);
 }
+
 
 // GetSong
 message GetSongRequest {
     int64 id = 1;
 }
 
-message GetSongsRequest {
+message GetSongResponse {
+    Song song = 1;
 }
 
 // AddSong
@@ -42,11 +43,10 @@ message RemoveSongResponse {
 }
 
 // GetSongs
-message GetSongsResponse {
-    Song song = 1;
+message GetSongsRequest {
 }
 
-message GetSongResponse {
+message GetSongsResponse {
     Song song = 1;
 }
 

@@ -50,25 +50,25 @@ type Song struct {
 	// Grouping holds the value of the "grouping" field.
 	Grouping string `json:"grouping,omitempty"`
 	// Year holds the value of the "year" field.
-	Year uint `json:"year,omitempty"`
+	Year uint32 `json:"year,omitempty"`
 	// TrackNumber holds the value of the "track_number" field.
-	TrackNumber uint `json:"track_number,omitempty"`
+	TrackNumber uint32 `json:"track_number,omitempty"`
 	// OfTrackNumber holds the value of the "of_track_number" field.
-	OfTrackNumber uint `json:"of_track_number,omitempty"`
+	OfTrackNumber uint32 `json:"of_track_number,omitempty"`
 	// DiskNumber holds the value of the "disk_number" field.
-	DiskNumber uint `json:"disk_number,omitempty"`
+	DiskNumber uint32 `json:"disk_number,omitempty"`
 	// OfDiskNumber holds the value of the "of_disk_number" field.
-	OfDiskNumber uint `json:"of_disk_number,omitempty"`
+	OfDiskNumber uint32 `json:"of_disk_number,omitempty"`
 	// Duration holds the value of the "duration" field.
-	Duration int `json:"duration,omitempty"`
+	Duration uint32 `json:"duration,omitempty"`
 	// PlayCount holds the value of the "play_count" field.
-	PlayCount uint `json:"play_count,omitempty"`
+	PlayCount uint32 `json:"play_count,omitempty"`
 	// SkippedCount holds the value of the "skipped_count" field.
-	SkippedCount uint `json:"skipped_count,omitempty"`
+	SkippedCount uint32 `json:"skipped_count,omitempty"`
 	// Comment holds the value of the "comment" field.
 	Comment string `json:"comment,omitempty"`
 	// BeatsPerMinute holds the value of the "beats_per_minute" field.
-	BeatsPerMinute uint `json:"beats_per_minute,omitempty"`
+	BeatsPerMinute uint32 `json:"beats_per_minute,omitempty"`
 	// Copyright holds the value of the "copyright" field.
 	Copyright string `json:"copyright,omitempty"`
 	// DateTagged holds the value of the "date_tagged" field.
@@ -298,42 +298,42 @@ func (s *Song) assignValues(values ...interface{}) error {
 	if value, ok := values[16].(*sql.NullInt64); !ok {
 		return fmt.Errorf("unexpected type %T for field year", values[16])
 	} else if value.Valid {
-		s.Year = uint(value.Int64)
+		s.Year = uint32(value.Int64)
 	}
 	if value, ok := values[17].(*sql.NullInt64); !ok {
 		return fmt.Errorf("unexpected type %T for field track_number", values[17])
 	} else if value.Valid {
-		s.TrackNumber = uint(value.Int64)
+		s.TrackNumber = uint32(value.Int64)
 	}
 	if value, ok := values[18].(*sql.NullInt64); !ok {
 		return fmt.Errorf("unexpected type %T for field of_track_number", values[18])
 	} else if value.Valid {
-		s.OfTrackNumber = uint(value.Int64)
+		s.OfTrackNumber = uint32(value.Int64)
 	}
 	if value, ok := values[19].(*sql.NullInt64); !ok {
 		return fmt.Errorf("unexpected type %T for field disk_number", values[19])
 	} else if value.Valid {
-		s.DiskNumber = uint(value.Int64)
+		s.DiskNumber = uint32(value.Int64)
 	}
 	if value, ok := values[20].(*sql.NullInt64); !ok {
 		return fmt.Errorf("unexpected type %T for field of_disk_number", values[20])
 	} else if value.Valid {
-		s.OfDiskNumber = uint(value.Int64)
+		s.OfDiskNumber = uint32(value.Int64)
 	}
 	if value, ok := values[21].(*sql.NullInt64); !ok {
 		return fmt.Errorf("unexpected type %T for field duration", values[21])
 	} else if value.Valid {
-		s.Duration = int(value.Int64)
+		s.Duration = uint32(value.Int64)
 	}
 	if value, ok := values[22].(*sql.NullInt64); !ok {
 		return fmt.Errorf("unexpected type %T for field play_count", values[22])
 	} else if value.Valid {
-		s.PlayCount = uint(value.Int64)
+		s.PlayCount = uint32(value.Int64)
 	}
 	if value, ok := values[23].(*sql.NullInt64); !ok {
 		return fmt.Errorf("unexpected type %T for field skipped_count", values[23])
 	} else if value.Valid {
-		s.SkippedCount = uint(value.Int64)
+		s.SkippedCount = uint32(value.Int64)
 	}
 	if value, ok := values[24].(*sql.NullString); !ok {
 		return fmt.Errorf("unexpected type %T for field comment", values[24])
@@ -343,7 +343,7 @@ func (s *Song) assignValues(values ...interface{}) error {
 	if value, ok := values[25].(*sql.NullInt64); !ok {
 		return fmt.Errorf("unexpected type %T for field beats_per_minute", values[25])
 	} else if value.Valid {
-		s.BeatsPerMinute = uint(value.Int64)
+		s.BeatsPerMinute = uint32(value.Int64)
 	}
 	if value, ok := values[26].(*sql.NullString); !ok {
 		return fmt.Errorf("unexpected type %T for field copyright", values[26])

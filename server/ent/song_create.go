@@ -230,13 +230,13 @@ func (sc *SongCreate) SetNillableGrouping(s *string) *SongCreate {
 }
 
 // SetYear sets the year field.
-func (sc *SongCreate) SetYear(u uint) *SongCreate {
+func (sc *SongCreate) SetYear(u uint32) *SongCreate {
 	sc.mutation.SetYear(u)
 	return sc
 }
 
 // SetNillableYear sets the year field if the given value is not nil.
-func (sc *SongCreate) SetNillableYear(u *uint) *SongCreate {
+func (sc *SongCreate) SetNillableYear(u *uint32) *SongCreate {
 	if u != nil {
 		sc.SetYear(*u)
 	}
@@ -244,13 +244,13 @@ func (sc *SongCreate) SetNillableYear(u *uint) *SongCreate {
 }
 
 // SetTrackNumber sets the track_number field.
-func (sc *SongCreate) SetTrackNumber(u uint) *SongCreate {
+func (sc *SongCreate) SetTrackNumber(u uint32) *SongCreate {
 	sc.mutation.SetTrackNumber(u)
 	return sc
 }
 
 // SetNillableTrackNumber sets the track_number field if the given value is not nil.
-func (sc *SongCreate) SetNillableTrackNumber(u *uint) *SongCreate {
+func (sc *SongCreate) SetNillableTrackNumber(u *uint32) *SongCreate {
 	if u != nil {
 		sc.SetTrackNumber(*u)
 	}
@@ -258,13 +258,13 @@ func (sc *SongCreate) SetNillableTrackNumber(u *uint) *SongCreate {
 }
 
 // SetOfTrackNumber sets the of_track_number field.
-func (sc *SongCreate) SetOfTrackNumber(u uint) *SongCreate {
+func (sc *SongCreate) SetOfTrackNumber(u uint32) *SongCreate {
 	sc.mutation.SetOfTrackNumber(u)
 	return sc
 }
 
 // SetNillableOfTrackNumber sets the of_track_number field if the given value is not nil.
-func (sc *SongCreate) SetNillableOfTrackNumber(u *uint) *SongCreate {
+func (sc *SongCreate) SetNillableOfTrackNumber(u *uint32) *SongCreate {
 	if u != nil {
 		sc.SetOfTrackNumber(*u)
 	}
@@ -272,13 +272,13 @@ func (sc *SongCreate) SetNillableOfTrackNumber(u *uint) *SongCreate {
 }
 
 // SetDiskNumber sets the disk_number field.
-func (sc *SongCreate) SetDiskNumber(u uint) *SongCreate {
+func (sc *SongCreate) SetDiskNumber(u uint32) *SongCreate {
 	sc.mutation.SetDiskNumber(u)
 	return sc
 }
 
 // SetNillableDiskNumber sets the disk_number field if the given value is not nil.
-func (sc *SongCreate) SetNillableDiskNumber(u *uint) *SongCreate {
+func (sc *SongCreate) SetNillableDiskNumber(u *uint32) *SongCreate {
 	if u != nil {
 		sc.SetDiskNumber(*u)
 	}
@@ -286,13 +286,13 @@ func (sc *SongCreate) SetNillableDiskNumber(u *uint) *SongCreate {
 }
 
 // SetOfDiskNumber sets the of_disk_number field.
-func (sc *SongCreate) SetOfDiskNumber(u uint) *SongCreate {
+func (sc *SongCreate) SetOfDiskNumber(u uint32) *SongCreate {
 	sc.mutation.SetOfDiskNumber(u)
 	return sc
 }
 
 // SetNillableOfDiskNumber sets the of_disk_number field if the given value is not nil.
-func (sc *SongCreate) SetNillableOfDiskNumber(u *uint) *SongCreate {
+func (sc *SongCreate) SetNillableOfDiskNumber(u *uint32) *SongCreate {
 	if u != nil {
 		sc.SetOfDiskNumber(*u)
 	}
@@ -300,27 +300,27 @@ func (sc *SongCreate) SetNillableOfDiskNumber(u *uint) *SongCreate {
 }
 
 // SetDuration sets the duration field.
-func (sc *SongCreate) SetDuration(i int) *SongCreate {
-	sc.mutation.SetDuration(i)
+func (sc *SongCreate) SetDuration(u uint32) *SongCreate {
+	sc.mutation.SetDuration(u)
 	return sc
 }
 
 // SetNillableDuration sets the duration field if the given value is not nil.
-func (sc *SongCreate) SetNillableDuration(i *int) *SongCreate {
-	if i != nil {
-		sc.SetDuration(*i)
+func (sc *SongCreate) SetNillableDuration(u *uint32) *SongCreate {
+	if u != nil {
+		sc.SetDuration(*u)
 	}
 	return sc
 }
 
 // SetPlayCount sets the play_count field.
-func (sc *SongCreate) SetPlayCount(u uint) *SongCreate {
+func (sc *SongCreate) SetPlayCount(u uint32) *SongCreate {
 	sc.mutation.SetPlayCount(u)
 	return sc
 }
 
 // SetNillablePlayCount sets the play_count field if the given value is not nil.
-func (sc *SongCreate) SetNillablePlayCount(u *uint) *SongCreate {
+func (sc *SongCreate) SetNillablePlayCount(u *uint32) *SongCreate {
 	if u != nil {
 		sc.SetPlayCount(*u)
 	}
@@ -328,13 +328,13 @@ func (sc *SongCreate) SetNillablePlayCount(u *uint) *SongCreate {
 }
 
 // SetSkippedCount sets the skipped_count field.
-func (sc *SongCreate) SetSkippedCount(u uint) *SongCreate {
+func (sc *SongCreate) SetSkippedCount(u uint32) *SongCreate {
 	sc.mutation.SetSkippedCount(u)
 	return sc
 }
 
 // SetNillableSkippedCount sets the skipped_count field if the given value is not nil.
-func (sc *SongCreate) SetNillableSkippedCount(u *uint) *SongCreate {
+func (sc *SongCreate) SetNillableSkippedCount(u *uint32) *SongCreate {
 	if u != nil {
 		sc.SetSkippedCount(*u)
 	}
@@ -356,13 +356,13 @@ func (sc *SongCreate) SetNillableComment(s *string) *SongCreate {
 }
 
 // SetBeatsPerMinute sets the beats_per_minute field.
-func (sc *SongCreate) SetBeatsPerMinute(u uint) *SongCreate {
+func (sc *SongCreate) SetBeatsPerMinute(u uint32) *SongCreate {
 	sc.mutation.SetBeatsPerMinute(u)
 	return sc
 }
 
 // SetNillableBeatsPerMinute sets the beats_per_minute field if the given value is not nil.
-func (sc *SongCreate) SetNillableBeatsPerMinute(u *uint) *SongCreate {
+func (sc *SongCreate) SetNillableBeatsPerMinute(u *uint32) *SongCreate {
 	if u != nil {
 		sc.SetBeatsPerMinute(*u)
 	}
@@ -942,7 +942,7 @@ func (sc *SongCreate) createSpec() (*Song, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := sc.mutation.Year(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldYear,
 		})
@@ -950,7 +950,7 @@ func (sc *SongCreate) createSpec() (*Song, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := sc.mutation.TrackNumber(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldTrackNumber,
 		})
@@ -958,7 +958,7 @@ func (sc *SongCreate) createSpec() (*Song, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := sc.mutation.OfTrackNumber(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldOfTrackNumber,
 		})
@@ -966,7 +966,7 @@ func (sc *SongCreate) createSpec() (*Song, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := sc.mutation.DiskNumber(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldDiskNumber,
 		})
@@ -974,7 +974,7 @@ func (sc *SongCreate) createSpec() (*Song, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := sc.mutation.OfDiskNumber(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldOfDiskNumber,
 		})
@@ -982,7 +982,7 @@ func (sc *SongCreate) createSpec() (*Song, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := sc.mutation.Duration(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldDuration,
 		})
@@ -990,7 +990,7 @@ func (sc *SongCreate) createSpec() (*Song, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := sc.mutation.PlayCount(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldPlayCount,
 		})
@@ -998,7 +998,7 @@ func (sc *SongCreate) createSpec() (*Song, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := sc.mutation.SkippedCount(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldSkippedCount,
 		})
@@ -1014,7 +1014,7 @@ func (sc *SongCreate) createSpec() (*Song, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := sc.mutation.BeatsPerMinute(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldBeatsPerMinute,
 		})

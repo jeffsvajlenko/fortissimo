@@ -186,7 +186,7 @@ var (
 
 var (
 	// DefaultPlayCount holds the default value on creation for the play_count field.
-	DefaultPlayCount uint
+	DefaultPlayCount uint32
 	// DefaultSkippedCount holds the default value on creation for the skipped_count field.
-	DefaultSkippedCount uint
+	DefaultSkippedCount uint32
 )

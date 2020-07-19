@@ -47,25 +47,25 @@ func (Song) Fields() []ent.Field {
 			Optional(),
 		field.String("grouping").
 			Optional(),
-		field.Uint("year").
+		field.Uint32("year").
 			Optional(),
-		field.Uint("track_number").
+		field.Uint32("track_number").
 			Optional(),
-		field.Uint("of_track_number").
+		field.Uint32("of_track_number").
 			Optional(),
-		field.Uint("disk_number").
+		field.Uint32("disk_number").
 			Optional(),
-		field.Uint("of_disk_number").
+		field.Uint32("of_disk_number").
 			Optional(),
-		field.Int("duration").
+		field.Uint32("duration").
 			Optional(),
-		field.Uint("play_count").
+		field.Uint32("play_count").
 			Default(0),
-		field.Uint("skipped_count").
+		field.Uint32("skipped_count").
 			Default(0),
 		field.String("comment").
 			Optional(),
-		field.Uint("beats_per_minute").
+		field.Uint32("beats_per_minute").
 			Optional(),
 		field.String("copyright").
 			Optional(),

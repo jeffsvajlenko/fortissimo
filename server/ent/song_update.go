@@ -328,14 +328,14 @@ func (su *SongUpdate) ClearGrouping() *SongUpdate {
 }
 
 // SetYear sets the year field.
-func (su *SongUpdate) SetYear(u uint) *SongUpdate {
+func (su *SongUpdate) SetYear(u uint32) *SongUpdate {
 	su.mutation.ResetYear()
 	su.mutation.SetYear(u)
 	return su
 }
 
 // SetNillableYear sets the year field if the given value is not nil.
-func (su *SongUpdate) SetNillableYear(u *uint) *SongUpdate {
+func (su *SongUpdate) SetNillableYear(u *uint32) *SongUpdate {
 	if u != nil {
 		su.SetYear(*u)
 	}
@@ -343,7 +343,7 @@ func (su *SongUpdate) SetNillableYear(u *uint) *SongUpdate {
 }
 
 // AddYear adds u to year.
-func (su *SongUpdate) AddYear(u uint) *SongUpdate {
+func (su *SongUpdate) AddYear(u uint32) *SongUpdate {
 	su.mutation.AddYear(u)
 	return su
 }
@@ -355,14 +355,14 @@ func (su *SongUpdate) ClearYear() *SongUpdate {
 }
 
 // SetTrackNumber sets the track_number field.
-func (su *SongUpdate) SetTrackNumber(u uint) *SongUpdate {
+func (su *SongUpdate) SetTrackNumber(u uint32) *SongUpdate {
 	su.mutation.ResetTrackNumber()
 	su.mutation.SetTrackNumber(u)
 	return su
 }
 
 // SetNillableTrackNumber sets the track_number field if the given value is not nil.
-func (su *SongUpdate) SetNillableTrackNumber(u *uint) *SongUpdate {
+func (su *SongUpdate) SetNillableTrackNumber(u *uint32) *SongUpdate {
 	if u != nil {
 		su.SetTrackNumber(*u)
 	}
@@ -370,7 +370,7 @@ func (su *SongUpdate) SetNillableTrackNumber(u *uint) *SongUpdate {
 }
 
 // AddTrackNumber adds u to track_number.
-func (su *SongUpdate) AddTrackNumber(u uint) *SongUpdate {
+func (su *SongUpdate) AddTrackNumber(u uint32) *SongUpdate {
 	su.mutation.AddTrackNumber(u)
 	return su
 }
@@ -382,14 +382,14 @@ func (su *SongUpdate) ClearTrackNumber() *SongUpdate {
 }
 
 // SetOfTrackNumber sets the of_track_number field.
-func (su *SongUpdate) SetOfTrackNumber(u uint) *SongUpdate {
+func (su *SongUpdate) SetOfTrackNumber(u uint32) *SongUpdate {
 	su.mutation.ResetOfTrackNumber()
 	su.mutation.SetOfTrackNumber(u)
 	return su
 }
 
 // SetNillableOfTrackNumber sets the of_track_number field if the given value is not nil.
-func (su *SongUpdate) SetNillableOfTrackNumber(u *uint) *SongUpdate {
+func (su *SongUpdate) SetNillableOfTrackNumber(u *uint32) *SongUpdate {
 	if u != nil {
 		su.SetOfTrackNumber(*u)
 	}
@@ -397,7 +397,7 @@ func (su *SongUpdate) SetNillableOfTrackNumber(u *uint) *SongUpdate {
 }
 
 // AddOfTrackNumber adds u to of_track_number.
-func (su *SongUpdate) AddOfTrackNumber(u uint) *SongUpdate {
+func (su *SongUpdate) AddOfTrackNumber(u uint32) *SongUpdate {
 	su.mutation.AddOfTrackNumber(u)
 	return su
 }
@@ -409,14 +409,14 @@ func (su *SongUpdate) ClearOfTrackNumber() *SongUpdate {
 }
 
 // SetDiskNumber sets the disk_number field.
-func (su *SongUpdate) SetDiskNumber(u uint) *SongUpdate {
+func (su *SongUpdate) SetDiskNumber(u uint32) *SongUpdate {
 	su.mutation.ResetDiskNumber()
 	su.mutation.SetDiskNumber(u)
 	return su
 }
 
 // SetNillableDiskNumber sets the disk_number field if the given value is not nil.
-func (su *SongUpdate) SetNillableDiskNumber(u *uint) *SongUpdate {
+func (su *SongUpdate) SetNillableDiskNumber(u *uint32) *SongUpdate {
 	if u != nil {
 		su.SetDiskNumber(*u)
 	}
@@ -424,7 +424,7 @@ func (su *SongUpdate) SetNillableDiskNumber(u *uint) *SongUpdate {
 }
 
 // AddDiskNumber adds u to disk_number.
-func (su *SongUpdate) AddDiskNumber(u uint) *SongUpdate {
+func (su *SongUpdate) AddDiskNumber(u uint32) *SongUpdate {
 	su.mutation.AddDiskNumber(u)
 	return su
 }
@@ -436,14 +436,14 @@ func (su *SongUpdate) ClearDiskNumber() *SongUpdate {
 }
 
 // SetOfDiskNumber sets the of_disk_number field.
-func (su *SongUpdate) SetOfDiskNumber(u uint) *SongUpdate {
+func (su *SongUpdate) SetOfDiskNumber(u uint32) *SongUpdate {
 	su.mutation.ResetOfDiskNumber()
 	su.mutation.SetOfDiskNumber(u)
 	return su
 }
 
 // SetNillableOfDiskNumber sets the of_disk_number field if the given value is not nil.
-func (su *SongUpdate) SetNillableOfDiskNumber(u *uint) *SongUpdate {
+func (su *SongUpdate) SetNillableOfDiskNumber(u *uint32) *SongUpdate {
 	if u != nil {
 		su.SetOfDiskNumber(*u)
 	}
@@ -451,7 +451,7 @@ func (su *SongUpdate) SetNillableOfDiskNumber(u *uint) *SongUpdate {
 }
 
 // AddOfDiskNumber adds u to of_disk_number.
-func (su *SongUpdate) AddOfDiskNumber(u uint) *SongUpdate {
+func (su *SongUpdate) AddOfDiskNumber(u uint32) *SongUpdate {
 	su.mutation.AddOfDiskNumber(u)
 	return su
 }
@@ -463,23 +463,23 @@ func (su *SongUpdate) ClearOfDiskNumber() *SongUpdate {
 }
 
 // SetDuration sets the duration field.
-func (su *SongUpdate) SetDuration(i int) *SongUpdate {
+func (su *SongUpdate) SetDuration(u uint32) *SongUpdate {
 	su.mutation.ResetDuration()
-	su.mutation.SetDuration(i)
+	su.mutation.SetDuration(u)
 	return su
 }
 
 // SetNillableDuration sets the duration field if the given value is not nil.
-func (su *SongUpdate) SetNillableDuration(i *int) *SongUpdate {
-	if i != nil {
-		su.SetDuration(*i)
+func (su *SongUpdate) SetNillableDuration(u *uint32) *SongUpdate {
+	if u != nil {
+		su.SetDuration(*u)
 	}
 	return su
 }
 
-// AddDuration adds i to duration.
-func (su *SongUpdate) AddDuration(i int) *SongUpdate {
-	su.mutation.AddDuration(i)
+// AddDuration adds u to duration.
+func (su *SongUpdate) AddDuration(u uint32) *SongUpdate {
+	su.mutation.AddDuration(u)
 	return su
 }
 
@@ -490,14 +490,14 @@ func (su *SongUpdate) ClearDuration() *SongUpdate {
 }
 
 // SetPlayCount sets the play_count field.
-func (su *SongUpdate) SetPlayCount(u uint) *SongUpdate {
+func (su *SongUpdate) SetPlayCount(u uint32) *SongUpdate {
 	su.mutation.ResetPlayCount()
 	su.mutation.SetPlayCount(u)
 	return su
 }
 
 // SetNillablePlayCount sets the play_count field if the given value is not nil.
-func (su *SongUpdate) SetNillablePlayCount(u *uint) *SongUpdate {
+func (su *SongUpdate) SetNillablePlayCount(u *uint32) *SongUpdate {
 	if u != nil {
 		su.SetPlayCount(*u)
 	}
@@ -505,20 +505,20 @@ func (su *SongUpdate) SetNillablePlayCount(u *uint) *SongUpdate {
 }
 
 // AddPlayCount adds u to play_count.
-func (su *SongUpdate) AddPlayCount(u uint) *SongUpdate {
+func (su *SongUpdate) AddPlayCount(u uint32) *SongUpdate {
 	su.mutation.AddPlayCount(u)
 	return su
 }
 
 // SetSkippedCount sets the skipped_count field.
-func (su *SongUpdate) SetSkippedCount(u uint) *SongUpdate {
+func (su *SongUpdate) SetSkippedCount(u uint32) *SongUpdate {
 	su.mutation.ResetSkippedCount()
 	su.mutation.SetSkippedCount(u)
 	return su
 }
 
 // SetNillableSkippedCount sets the skipped_count field if the given value is not nil.
-func (su *SongUpdate) SetNillableSkippedCount(u *uint) *SongUpdate {
+func (su *SongUpdate) SetNillableSkippedCount(u *uint32) *SongUpdate {
 	if u != nil {
 		su.SetSkippedCount(*u)
 	}
@@ -526,7 +526,7 @@ func (su *SongUpdate) SetNillableSkippedCount(u *uint) *SongUpdate {
 }
 
 // AddSkippedCount adds u to skipped_count.
-func (su *SongUpdate) AddSkippedCount(u uint) *SongUpdate {
+func (su *SongUpdate) AddSkippedCount(u uint32) *SongUpdate {
 	su.mutation.AddSkippedCount(u)
 	return su
 }
@@ -552,14 +552,14 @@ func (su *SongUpdate) ClearComment() *SongUpdate {
 }
 
 // SetBeatsPerMinute sets the beats_per_minute field.
-func (su *SongUpdate) SetBeatsPerMinute(u uint) *SongUpdate {
+func (su *SongUpdate) SetBeatsPerMinute(u uint32) *SongUpdate {
 	su.mutation.ResetBeatsPerMinute()
 	su.mutation.SetBeatsPerMinute(u)
 	return su
 }
 
 // SetNillableBeatsPerMinute sets the beats_per_minute field if the given value is not nil.
-func (su *SongUpdate) SetNillableBeatsPerMinute(u *uint) *SongUpdate {
+func (su *SongUpdate) SetNillableBeatsPerMinute(u *uint32) *SongUpdate {
 	if u != nil {
 		su.SetBeatsPerMinute(*u)
 	}
@@ -567,7 +567,7 @@ func (su *SongUpdate) SetNillableBeatsPerMinute(u *uint) *SongUpdate {
 }
 
 // AddBeatsPerMinute adds u to beats_per_minute.
-func (su *SongUpdate) AddBeatsPerMinute(u uint) *SongUpdate {
+func (su *SongUpdate) AddBeatsPerMinute(u uint32) *SongUpdate {
 	su.mutation.AddBeatsPerMinute(u)
 	return su
 }
@@ -1415,148 +1415,148 @@ func (su *SongUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := su.mutation.Year(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldYear,
 		})
 	}
 	if value, ok := su.mutation.AddedYear(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldYear,
 		})
 	}
 	if su.mutation.YearCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Column: song.FieldYear,
 		})
 	}
 	if value, ok := su.mutation.TrackNumber(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldTrackNumber,
 		})
 	}
 	if value, ok := su.mutation.AddedTrackNumber(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldTrackNumber,
 		})
 	}
 	if su.mutation.TrackNumberCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Column: song.FieldTrackNumber,
 		})
 	}
 	if value, ok := su.mutation.OfTrackNumber(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldOfTrackNumber,
 		})
 	}
 	if value, ok := su.mutation.AddedOfTrackNumber(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldOfTrackNumber,
 		})
 	}
 	if su.mutation.OfTrackNumberCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Column: song.FieldOfTrackNumber,
 		})
 	}
 	if value, ok := su.mutation.DiskNumber(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldDiskNumber,
 		})
 	}
 	if value, ok := su.mutation.AddedDiskNumber(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldDiskNumber,
 		})
 	}
 	if su.mutation.DiskNumberCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Column: song.FieldDiskNumber,
 		})
 	}
 	if value, ok := su.mutation.OfDiskNumber(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldOfDiskNumber,
 		})
 	}
 	if value, ok := su.mutation.AddedOfDiskNumber(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldOfDiskNumber,
 		})
 	}
 	if su.mutation.OfDiskNumberCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Column: song.FieldOfDiskNumber,
 		})
 	}
 	if value, ok := su.mutation.Duration(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldDuration,
 		})
 	}
 	if value, ok := su.mutation.AddedDuration(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldDuration,
 		})
 	}
 	if su.mutation.DurationCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeUint32,
 			Column: song.FieldDuration,
 		})
 	}
 	if value, ok := su.mutation.PlayCount(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldPlayCount,
 		})
 	}
 	if value, ok := su.mutation.AddedPlayCount(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldPlayCount,
 		})
 	}
 	if value, ok := su.mutation.SkippedCount(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldSkippedCount,
 		})
 	}
 	if value, ok := su.mutation.AddedSkippedCount(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldSkippedCount,
 		})
@@ -1576,21 +1576,21 @@ func (su *SongUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := su.mutation.BeatsPerMinute(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldBeatsPerMinute,
 		})
 	}
 	if value, ok := su.mutation.AddedBeatsPerMinute(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldBeatsPerMinute,
 		})
 	}
 	if su.mutation.BeatsPerMinuteCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Column: song.FieldBeatsPerMinute,
 		})
 	}
@@ -2302,14 +2302,14 @@ func (suo *SongUpdateOne) ClearGrouping() *SongUpdateOne {
 }
 
 // SetYear sets the year field.
-func (suo *SongUpdateOne) SetYear(u uint) *SongUpdateOne {
+func (suo *SongUpdateOne) SetYear(u uint32) *SongUpdateOne {
 	suo.mutation.ResetYear()
 	suo.mutation.SetYear(u)
 	return suo
 }
 
 // SetNillableYear sets the year field if the given value is not nil.
-func (suo *SongUpdateOne) SetNillableYear(u *uint) *SongUpdateOne {
+func (suo *SongUpdateOne) SetNillableYear(u *uint32) *SongUpdateOne {
 	if u != nil {
 		suo.SetYear(*u)
 	}
@@ -2317,7 +2317,7 @@ func (suo *SongUpdateOne) SetNillableYear(u *uint) *SongUpdateOne {
 }
 
 // AddYear adds u to year.
-func (suo *SongUpdateOne) AddYear(u uint) *SongUpdateOne {
+func (suo *SongUpdateOne) AddYear(u uint32) *SongUpdateOne {
 	suo.mutation.AddYear(u)
 	return suo
 }
@@ -2329,14 +2329,14 @@ func (suo *SongUpdateOne) ClearYear() *SongUpdateOne {
 }
 
 // SetTrackNumber sets the track_number field.
-func (suo *SongUpdateOne) SetTrackNumber(u uint) *SongUpdateOne {
+func (suo *SongUpdateOne) SetTrackNumber(u uint32) *SongUpdateOne {
 	suo.mutation.ResetTrackNumber()
 	suo.mutation.SetTrackNumber(u)
 	return suo
 }
 
 // SetNillableTrackNumber sets the track_number field if the given value is not nil.
-func (suo *SongUpdateOne) SetNillableTrackNumber(u *uint) *SongUpdateOne {
+func (suo *SongUpdateOne) SetNillableTrackNumber(u *uint32) *SongUpdateOne {
 	if u != nil {
 		suo.SetTrackNumber(*u)
 	}
@@ -2344,7 +2344,7 @@ func (suo *SongUpdateOne) SetNillableTrackNumber(u *uint) *SongUpdateOne {
 }
 
 // AddTrackNumber adds u to track_number.
-func (suo *SongUpdateOne) AddTrackNumber(u uint) *SongUpdateOne {
+func (suo *SongUpdateOne) AddTrackNumber(u uint32) *SongUpdateOne {
 	suo.mutation.AddTrackNumber(u)
 	return suo
 }
@@ -2356,14 +2356,14 @@ func (suo *SongUpdateOne) ClearTrackNumber() *SongUpdateOne {
 }
 
 // SetOfTrackNumber sets the of_track_number field.
-func (suo *SongUpdateOne) SetOfTrackNumber(u uint) *SongUpdateOne {
+func (suo *SongUpdateOne) SetOfTrackNumber(u uint32) *SongUpdateOne {
 	suo.mutation.ResetOfTrackNumber()
 	suo.mutation.SetOfTrackNumber(u)
 	return suo
 }
 
 // SetNillableOfTrackNumber sets the of_track_number field if the given value is not nil.
-func (suo *SongUpdateOne) SetNillableOfTrackNumber(u *uint) *SongUpdateOne {
+func (suo *SongUpdateOne) SetNillableOfTrackNumber(u *uint32) *SongUpdateOne {
 	if u != nil {
 		suo.SetOfTrackNumber(*u)
 	}
@@ -2371,7 +2371,7 @@ func (suo *SongUpdateOne) SetNillableOfTrackNumber(u *uint) *SongUpdateOne {
 }
 
 // AddOfTrackNumber adds u to of_track_number.
-func (suo *SongUpdateOne) AddOfTrackNumber(u uint) *SongUpdateOne {
+func (suo *SongUpdateOne) AddOfTrackNumber(u uint32) *SongUpdateOne {
 	suo.mutation.AddOfTrackNumber(u)
 	return suo
 }
@@ -2383,14 +2383,14 @@ func (suo *SongUpdateOne) ClearOfTrackNumber() *SongUpdateOne {
 }
 
 // SetDiskNumber sets the disk_number field.
-func (suo *SongUpdateOne) SetDiskNumber(u uint) *SongUpdateOne {
+func (suo *SongUpdateOne) SetDiskNumber(u uint32) *SongUpdateOne {
 	suo.mutation.ResetDiskNumber()
 	suo.mutation.SetDiskNumber(u)
 	return suo
 }
 
 // SetNillableDiskNumber sets the disk_number field if the given value is not nil.
-func (suo *SongUpdateOne) SetNillableDiskNumber(u *uint) *SongUpdateOne {
+func (suo *SongUpdateOne) SetNillableDiskNumber(u *uint32) *SongUpdateOne {
 	if u != nil {
 		suo.SetDiskNumber(*u)
 	}
@@ -2398,7 +2398,7 @@ func (suo *SongUpdateOne) SetNillableDiskNumber(u *uint) *SongUpdateOne {
 }
 
 // AddDiskNumber adds u to disk_number.
-func (suo *SongUpdateOne) AddDiskNumber(u uint) *SongUpdateOne {
+func (suo *SongUpdateOne) AddDiskNumber(u uint32) *SongUpdateOne {
 	suo.mutation.AddDiskNumber(u)
 	return suo
 }
@@ -2410,14 +2410,14 @@ func (suo *SongUpdateOne) ClearDiskNumber() *SongUpdateOne {
 }
 
 // SetOfDiskNumber sets the of_disk_number field.
-func (suo *SongUpdateOne) SetOfDiskNumber(u uint) *SongUpdateOne {
+func (suo *SongUpdateOne) SetOfDiskNumber(u uint32) *SongUpdateOne {
 	suo.mutation.ResetOfDiskNumber()
 	suo.mutation.SetOfDiskNumber(u)
 	return suo
 }
 
 // SetNillableOfDiskNumber sets the of_disk_number field if the given value is not nil.
-func (suo *SongUpdateOne) SetNillableOfDiskNumber(u *uint) *SongUpdateOne {
+func (suo *SongUpdateOne) SetNillableOfDiskNumber(u *uint32) *SongUpdateOne {
 	if u != nil {
 		suo.SetOfDiskNumber(*u)
 	}
@@ -2425,7 +2425,7 @@ func (suo *SongUpdateOne) SetNillableOfDiskNumber(u *uint) *SongUpdateOne {
 }
 
 // AddOfDiskNumber adds u to of_disk_number.
-func (suo *SongUpdateOne) AddOfDiskNumber(u uint) *SongUpdateOne {
+func (suo *SongUpdateOne) AddOfDiskNumber(u uint32) *SongUpdateOne {
 	suo.mutation.AddOfDiskNumber(u)
 	return suo
 }
@@ -2437,23 +2437,23 @@ func (suo *SongUpdateOne) ClearOfDiskNumber() *SongUpdateOne {
 }
 
 // SetDuration sets the duration field.
-func (suo *SongUpdateOne) SetDuration(i int) *SongUpdateOne {
+func (suo *SongUpdateOne) SetDuration(u uint32) *SongUpdateOne {
 	suo.mutation.ResetDuration()
-	suo.mutation.SetDuration(i)
+	suo.mutation.SetDuration(u)
 	return suo
 }
 
 // SetNillableDuration sets the duration field if the given value is not nil.
-func (suo *SongUpdateOne) SetNillableDuration(i *int) *SongUpdateOne {
-	if i != nil {
-		suo.SetDuration(*i)
+func (suo *SongUpdateOne) SetNillableDuration(u *uint32) *SongUpdateOne {
+	if u != nil {
+		suo.SetDuration(*u)
 	}
 	return suo
 }
 
-// AddDuration adds i to duration.
-func (suo *SongUpdateOne) AddDuration(i int) *SongUpdateOne {
-	suo.mutation.AddDuration(i)
+// AddDuration adds u to duration.
+func (suo *SongUpdateOne) AddDuration(u uint32) *SongUpdateOne {
+	suo.mutation.AddDuration(u)
 	return suo
 }
 
@@ -2464,14 +2464,14 @@ func (suo *SongUpdateOne) ClearDuration() *SongUpdateOne {
 }
 
 // SetPlayCount sets the play_count field.
-func (suo *SongUpdateOne) SetPlayCount(u uint) *SongUpdateOne {
+func (suo *SongUpdateOne) SetPlayCount(u uint32) *SongUpdateOne {
 	suo.mutation.ResetPlayCount()
 	suo.mutation.SetPlayCount(u)
 	return suo
 }
 
 // SetNillablePlayCount sets the play_count field if the given value is not nil.
-func (suo *SongUpdateOne) SetNillablePlayCount(u *uint) *SongUpdateOne {
+func (suo *SongUpdateOne) SetNillablePlayCount(u *uint32) *SongUpdateOne {
 	if u != nil {
 		suo.SetPlayCount(*u)
 	}
@@ -2479,20 +2479,20 @@ func (suo *SongUpdateOne) SetNillablePlayCount(u *uint) *SongUpdateOne {
 }
 
 // AddPlayCount adds u to play_count.
-func (suo *SongUpdateOne) AddPlayCount(u uint) *SongUpdateOne {
+func (suo *SongUpdateOne) AddPlayCount(u uint32) *SongUpdateOne {
 	suo.mutation.AddPlayCount(u)
 	return suo
 }
 
 // SetSkippedCount sets the skipped_count field.
-func (suo *SongUpdateOne) SetSkippedCount(u uint) *SongUpdateOne {
+func (suo *SongUpdateOne) SetSkippedCount(u uint32) *SongUpdateOne {
 	suo.mutation.ResetSkippedCount()
 	suo.mutation.SetSkippedCount(u)
 	return suo
 }
 
 // SetNillableSkippedCount sets the skipped_count field if the given value is not nil.
-func (suo *SongUpdateOne) SetNillableSkippedCount(u *uint) *SongUpdateOne {
+func (suo *SongUpdateOne) SetNillableSkippedCount(u *uint32) *SongUpdateOne {
 	if u != nil {
 		suo.SetSkippedCount(*u)
 	}
@@ -2500,7 +2500,7 @@ func (suo *SongUpdateOne) SetNillableSkippedCount(u *uint) *SongUpdateOne {
 }
 
 // AddSkippedCount adds u to skipped_count.
-func (suo *SongUpdateOne) AddSkippedCount(u uint) *SongUpdateOne {
+func (suo *SongUpdateOne) AddSkippedCount(u uint32) *SongUpdateOne {
 	suo.mutation.AddSkippedCount(u)
 	return suo
 }
@@ -2526,14 +2526,14 @@ func (suo *SongUpdateOne) ClearComment() *SongUpdateOne {
 }
 
 // SetBeatsPerMinute sets the beats_per_minute field.
-func (suo *SongUpdateOne) SetBeatsPerMinute(u uint) *SongUpdateOne {
+func (suo *SongUpdateOne) SetBeatsPerMinute(u uint32) *SongUpdateOne {
 	suo.mutation.ResetBeatsPerMinute()
 	suo.mutation.SetBeatsPerMinute(u)
 	return suo
 }
 
 // SetNillableBeatsPerMinute sets the beats_per_minute field if the given value is not nil.
-func (suo *SongUpdateOne) SetNillableBeatsPerMinute(u *uint) *SongUpdateOne {
+func (suo *SongUpdateOne) SetNillableBeatsPerMinute(u *uint32) *SongUpdateOne {
 	if u != nil {
 		suo.SetBeatsPerMinute(*u)
 	}
@@ -2541,7 +2541,7 @@ func (suo *SongUpdateOne) SetNillableBeatsPerMinute(u *uint) *SongUpdateOne {
 }
 
 // AddBeatsPerMinute adds u to beats_per_minute.
-func (suo *SongUpdateOne) AddBeatsPerMinute(u uint) *SongUpdateOne {
+func (suo *SongUpdateOne) AddBeatsPerMinute(u uint32) *SongUpdateOne {
 	suo.mutation.AddBeatsPerMinute(u)
 	return suo
 }
@@ -3387,148 +3387,148 @@ func (suo *SongUpdateOne) sqlSave(ctx context.Context) (s *Song, err error) {
 	}
 	if value, ok := suo.mutation.Year(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldYear,
 		})
 	}
 	if value, ok := suo.mutation.AddedYear(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldYear,
 		})
 	}
 	if suo.mutation.YearCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Column: song.FieldYear,
 		})
 	}
 	if value, ok := suo.mutation.TrackNumber(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldTrackNumber,
 		})
 	}
 	if value, ok := suo.mutation.AddedTrackNumber(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldTrackNumber,
 		})
 	}
 	if suo.mutation.TrackNumberCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Column: song.FieldTrackNumber,
 		})
 	}
 	if value, ok := suo.mutation.OfTrackNumber(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldOfTrackNumber,
 		})
 	}
 	if value, ok := suo.mutation.AddedOfTrackNumber(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldOfTrackNumber,
 		})
 	}
 	if suo.mutation.OfTrackNumberCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Column: song.FieldOfTrackNumber,
 		})
 	}
 	if value, ok := suo.mutation.DiskNumber(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldDiskNumber,
 		})
 	}
 	if value, ok := suo.mutation.AddedDiskNumber(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldDiskNumber,
 		})
 	}
 	if suo.mutation.DiskNumberCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Column: song.FieldDiskNumber,
 		})
 	}
 	if value, ok := suo.mutation.OfDiskNumber(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldOfDiskNumber,
 		})
 	}
 	if value, ok := suo.mutation.AddedOfDiskNumber(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldOfDiskNumber,
 		})
 	}
 	if suo.mutation.OfDiskNumberCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Column: song.FieldOfDiskNumber,
 		})
 	}
 	if value, ok := suo.mutation.Duration(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldDuration,
 		})
 	}
 	if value, ok := suo.mutation.AddedDuration(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldDuration,
 		})
 	}
 	if suo.mutation.DurationCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeUint32,
 			Column: song.FieldDuration,
 		})
 	}
 	if value, ok := suo.mutation.PlayCount(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldPlayCount,
 		})
 	}
 	if value, ok := suo.mutation.AddedPlayCount(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldPlayCount,
 		})
 	}
 	if value, ok := suo.mutation.SkippedCount(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldSkippedCount,
 		})
 	}
 	if value, ok := suo.mutation.AddedSkippedCount(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldSkippedCount,
 		})
@@ -3548,21 +3548,21 @@ func (suo *SongUpdateOne) sqlSave(ctx context.Context) (s *Song, err error) {
 	}
 	if value, ok := suo.mutation.BeatsPerMinute(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldBeatsPerMinute,
 		})
 	}
 	if value, ok := suo.mutation.AddedBeatsPerMinute(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: song.FieldBeatsPerMinute,
 		})
 	}
 	if suo.mutation.BeatsPerMinuteCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint,
+			Type:   field.TypeUint32,
 			Column: song.FieldBeatsPerMinute,
 		})
 	}

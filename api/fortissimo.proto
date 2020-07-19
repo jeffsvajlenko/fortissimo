@@ -5,7 +5,6 @@ option go_package = "github.com/jeffsvajlenko/fortissimo/api/go/fortissimo";
 option csharp_namespace = "Fortissimo.Protobuf.Library";
 
 import "google/protobuf/timestamp.proto";
-import "google/protobuf/duration.proto";
 
 // Library Service
 service Fortissimo {
@@ -69,16 +68,16 @@ message Song {
     string conductor = 14;
     string genre = 15;
     string grouping = 16;
-    int32 year = 17;
-    int32 track_number = 18;
-    int32 of_track_number = 19;
-    int32 disk_number = 20;
-    int32 of_disk_number = 21;
-    google.protobuf.Duration duration = 22;
-    int32 play_count = 23;
-    int32 skipped_count = 24;
+    uint32 year = 17;
+    uint32 track_number = 18;
+    uint32 of_track_number = 19;
+    uint32 disk_number = 20;
+    uint32 of_disk_number = 21;
+    uint32 duration = 22;
+    uint32 play_count = 23;
+    uint32 skipped_count = 24;
     string comment = 25;
-    int32 beats_per_minute = 26;
+    uint32 beats_per_minute = 26;
     string copyright = 27;
     google.protobuf.Timestamp date_tagged = 28;
     string description = 29;

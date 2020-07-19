@@ -199,56 +199,56 @@ func Grouping(v string) predicate.Song {
 }
 
 // Year applies equality check predicate on the "year" field. It's identical to YearEQ.
-func Year(v uint) predicate.Song {
+func Year(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldYear), v))
 	})
 }
 
 // TrackNumber applies equality check predicate on the "track_number" field. It's identical to TrackNumberEQ.
-func TrackNumber(v uint) predicate.Song {
+func TrackNumber(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldTrackNumber), v))
 	})
 }
 
 // OfTrackNumber applies equality check predicate on the "of_track_number" field. It's identical to OfTrackNumberEQ.
-func OfTrackNumber(v uint) predicate.Song {
+func OfTrackNumber(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldOfTrackNumber), v))
 	})
 }
 
 // DiskNumber applies equality check predicate on the "disk_number" field. It's identical to DiskNumberEQ.
-func DiskNumber(v uint) predicate.Song {
+func DiskNumber(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldDiskNumber), v))
 	})
 }
 
 // OfDiskNumber applies equality check predicate on the "of_disk_number" field. It's identical to OfDiskNumberEQ.
-func OfDiskNumber(v uint) predicate.Song {
+func OfDiskNumber(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldOfDiskNumber), v))
 	})
 }
 
 // Duration applies equality check predicate on the "duration" field. It's identical to DurationEQ.
-func Duration(v int) predicate.Song {
+func Duration(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldDuration), v))
 	})
 }
 
 // PlayCount applies equality check predicate on the "play_count" field. It's identical to PlayCountEQ.
-func PlayCount(v uint) predicate.Song {
+func PlayCount(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldPlayCount), v))
 	})
 }
 
 // SkippedCount applies equality check predicate on the "skipped_count" field. It's identical to SkippedCountEQ.
-func SkippedCount(v uint) predicate.Song {
+func SkippedCount(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldSkippedCount), v))
 	})
@@ -262,7 +262,7 @@ func Comment(v string) predicate.Song {
 }
 
 // BeatsPerMinute applies equality check predicate on the "beats_per_minute" field. It's identical to BeatsPerMinuteEQ.
-func BeatsPerMinute(v uint) predicate.Song {
+func BeatsPerMinute(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldBeatsPerMinute), v))
 	})
@@ -2319,21 +2319,21 @@ func GroupingContainsFold(v string) predicate.Song {
 }
 
 // YearEQ applies the EQ predicate on the "year" field.
-func YearEQ(v uint) predicate.Song {
+func YearEQ(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldYear), v))
 	})
 }
 
 // YearNEQ applies the NEQ predicate on the "year" field.
-func YearNEQ(v uint) predicate.Song {
+func YearNEQ(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldYear), v))
 	})
 }
 
 // YearIn applies the In predicate on the "year" field.
-func YearIn(vs ...uint) predicate.Song {
+func YearIn(vs ...uint32) predicate.Song {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -2350,7 +2350,7 @@ func YearIn(vs ...uint) predicate.Song {
 }
 
 // YearNotIn applies the NotIn predicate on the "year" field.
-func YearNotIn(vs ...uint) predicate.Song {
+func YearNotIn(vs ...uint32) predicate.Song {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -2367,28 +2367,28 @@ func YearNotIn(vs ...uint) predicate.Song {
 }
 
 // YearGT applies the GT predicate on the "year" field.
-func YearGT(v uint) predicate.Song {
+func YearGT(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldYear), v))
 	})
 }
 
 // YearGTE applies the GTE predicate on the "year" field.
-func YearGTE(v uint) predicate.Song {
+func YearGTE(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldYear), v))
 	})
 }
 
 // YearLT applies the LT predicate on the "year" field.
-func YearLT(v uint) predicate.Song {
+func YearLT(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldYear), v))
 	})
 }
 
 // YearLTE applies the LTE predicate on the "year" field.
-func YearLTE(v uint) predicate.Song {
+func YearLTE(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldYear), v))
 	})
@@ -2409,21 +2409,21 @@ func YearNotNil() predicate.Song {
 }
 
 // TrackNumberEQ applies the EQ predicate on the "track_number" field.
-func TrackNumberEQ(v uint) predicate.Song {
+func TrackNumberEQ(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldTrackNumber), v))
 	})
 }
 
 // TrackNumberNEQ applies the NEQ predicate on the "track_number" field.
-func TrackNumberNEQ(v uint) predicate.Song {
+func TrackNumberNEQ(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldTrackNumber), v))
 	})
 }
 
 // TrackNumberIn applies the In predicate on the "track_number" field.
-func TrackNumberIn(vs ...uint) predicate.Song {
+func TrackNumberIn(vs ...uint32) predicate.Song {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -2440,7 +2440,7 @@ func TrackNumberIn(vs ...uint) predicate.Song {
 }
 
 // TrackNumberNotIn applies the NotIn predicate on the "track_number" field.
-func TrackNumberNotIn(vs ...uint) predicate.Song {
+func TrackNumberNotIn(vs ...uint32) predicate.Song {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -2457,28 +2457,28 @@ func TrackNumberNotIn(vs ...uint) predicate.Song {
 }
 
 // TrackNumberGT applies the GT predicate on the "track_number" field.
-func TrackNumberGT(v uint) predicate.Song {
+func TrackNumberGT(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldTrackNumber), v))
 	})
 }
 
 // TrackNumberGTE applies the GTE predicate on the "track_number" field.
-func TrackNumberGTE(v uint) predicate.Song {
+func TrackNumberGTE(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldTrackNumber), v))
 	})
 }
 
 // TrackNumberLT applies the LT predicate on the "track_number" field.
-func TrackNumberLT(v uint) predicate.Song {
+func TrackNumberLT(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldTrackNumber), v))
 	})
 }
 
 // TrackNumberLTE applies the LTE predicate on the "track_number" field.
-func TrackNumberLTE(v uint) predicate.Song {
+func TrackNumberLTE(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldTrackNumber), v))
 	})
@@ -2499,21 +2499,21 @@ func TrackNumberNotNil() predicate.Song {
 }
 
 // OfTrackNumberEQ applies the EQ predicate on the "of_track_number" field.
-func OfTrackNumberEQ(v uint) predicate.Song {
+func OfTrackNumberEQ(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldOfTrackNumber), v))
 	})
 }
 
 // OfTrackNumberNEQ applies the NEQ predicate on the "of_track_number" field.
-func OfTrackNumberNEQ(v uint) predicate.Song {
+func OfTrackNumberNEQ(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldOfTrackNumber), v))
 	})
 }
 
 // OfTrackNumberIn applies the In predicate on the "of_track_number" field.
-func OfTrackNumberIn(vs ...uint) predicate.Song {
+func OfTrackNumberIn(vs ...uint32) predicate.Song {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -2530,7 +2530,7 @@ func OfTrackNumberIn(vs ...uint) predicate.Song {
 }
 
 // OfTrackNumberNotIn applies the NotIn predicate on the "of_track_number" field.
-func OfTrackNumberNotIn(vs ...uint) predicate.Song {
+func OfTrackNumberNotIn(vs ...uint32) predicate.Song {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -2547,28 +2547,28 @@ func OfTrackNumberNotIn(vs ...uint) predicate.Song {
 }
 
 // OfTrackNumberGT applies the GT predicate on the "of_track_number" field.
-func OfTrackNumberGT(v uint) predicate.Song {
+func OfTrackNumberGT(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldOfTrackNumber), v))
 	})
 }
 
 // OfTrackNumberGTE applies the GTE predicate on the "of_track_number" field.
-func OfTrackNumberGTE(v uint) predicate.Song {
+func OfTrackNumberGTE(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldOfTrackNumber), v))
 	})
 }
 
 // OfTrackNumberLT applies the LT predicate on the "of_track_number" field.
-func OfTrackNumberLT(v uint) predicate.Song {
+func OfTrackNumberLT(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldOfTrackNumber), v))
 	})
 }
 
 // OfTrackNumberLTE applies the LTE predicate on the "of_track_number" field.
-func OfTrackNumberLTE(v uint) predicate.Song {
+func OfTrackNumberLTE(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldOfTrackNumber), v))
 	})
@@ -2589,21 +2589,21 @@ func OfTrackNumberNotNil() predicate.Song {
 }
 
 // DiskNumberEQ applies the EQ predicate on the "disk_number" field.
-func DiskNumberEQ(v uint) predicate.Song {
+func DiskNumberEQ(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldDiskNumber), v))
 	})
 }
 
 // DiskNumberNEQ applies the NEQ predicate on the "disk_number" field.
-func DiskNumberNEQ(v uint) predicate.Song {
+func DiskNumberNEQ(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldDiskNumber), v))
 	})
 }
 
 // DiskNumberIn applies the In predicate on the "disk_number" field.
-func DiskNumberIn(vs ...uint) predicate.Song {
+func DiskNumberIn(vs ...uint32) predicate.Song {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -2620,7 +2620,7 @@ func DiskNumberIn(vs ...uint) predicate.Song {
 }
 
 // DiskNumberNotIn applies the NotIn predicate on the "disk_number" field.
-func DiskNumberNotIn(vs ...uint) predicate.Song {
+func DiskNumberNotIn(vs ...uint32) predicate.Song {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -2637,28 +2637,28 @@ func DiskNumberNotIn(vs ...uint) predicate.Song {
 }
 
 // DiskNumberGT applies the GT predicate on the "disk_number" field.
-func DiskNumberGT(v uint) predicate.Song {
+func DiskNumberGT(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldDiskNumber), v))
 	})
 }
 
 // DiskNumberGTE applies the GTE predicate on the "disk_number" field.
-func DiskNumberGTE(v uint) predicate.Song {
+func DiskNumberGTE(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldDiskNumber), v))
 	})
 }
 
 // DiskNumberLT applies the LT predicate on the "disk_number" field.
-func DiskNumberLT(v uint) predicate.Song {
+func DiskNumberLT(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldDiskNumber), v))
 	})
 }
 
 // DiskNumberLTE applies the LTE predicate on the "disk_number" field.
-func DiskNumberLTE(v uint) predicate.Song {
+func DiskNumberLTE(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldDiskNumber), v))
 	})
@@ -2679,21 +2679,21 @@ func DiskNumberNotNil() predicate.Song {
 }
 
 // OfDiskNumberEQ applies the EQ predicate on the "of_disk_number" field.
-func OfDiskNumberEQ(v uint) predicate.Song {
+func OfDiskNumberEQ(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldOfDiskNumber), v))
 	})
 }
 
 // OfDiskNumberNEQ applies the NEQ predicate on the "of_disk_number" field.
-func OfDiskNumberNEQ(v uint) predicate.Song {
+func OfDiskNumberNEQ(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldOfDiskNumber), v))
 	})
 }
 
 // OfDiskNumberIn applies the In predicate on the "of_disk_number" field.
-func OfDiskNumberIn(vs ...uint) predicate.Song {
+func OfDiskNumberIn(vs ...uint32) predicate.Song {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -2710,7 +2710,7 @@ func OfDiskNumberIn(vs ...uint) predicate.Song {
 }
 
 // OfDiskNumberNotIn applies the NotIn predicate on the "of_disk_number" field.
-func OfDiskNumberNotIn(vs ...uint) predicate.Song {
+func OfDiskNumberNotIn(vs ...uint32) predicate.Song {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -2727,28 +2727,28 @@ func OfDiskNumberNotIn(vs ...uint) predicate.Song {
 }
 
 // OfDiskNumberGT applies the GT predicate on the "of_disk_number" field.
-func OfDiskNumberGT(v uint) predicate.Song {
+func OfDiskNumberGT(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldOfDiskNumber), v))
 	})
 }
 
 // OfDiskNumberGTE applies the GTE predicate on the "of_disk_number" field.
-func OfDiskNumberGTE(v uint) predicate.Song {
+func OfDiskNumberGTE(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldOfDiskNumber), v))
 	})
 }
 
 // OfDiskNumberLT applies the LT predicate on the "of_disk_number" field.
-func OfDiskNumberLT(v uint) predicate.Song {
+func OfDiskNumberLT(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldOfDiskNumber), v))
 	})
 }
 
 // OfDiskNumberLTE applies the LTE predicate on the "of_disk_number" field.
-func OfDiskNumberLTE(v uint) predicate.Song {
+func OfDiskNumberLTE(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldOfDiskNumber), v))
 	})
@@ -2769,21 +2769,21 @@ func OfDiskNumberNotNil() predicate.Song {
 }
 
 // DurationEQ applies the EQ predicate on the "duration" field.
-func DurationEQ(v int) predicate.Song {
+func DurationEQ(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldDuration), v))
 	})
 }
 
 // DurationNEQ applies the NEQ predicate on the "duration" field.
-func DurationNEQ(v int) predicate.Song {
+func DurationNEQ(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldDuration), v))
 	})
 }
 
 // DurationIn applies the In predicate on the "duration" field.
-func DurationIn(vs ...int) predicate.Song {
+func DurationIn(vs ...uint32) predicate.Song {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -2800,7 +2800,7 @@ func DurationIn(vs ...int) predicate.Song {
 }
 
 // DurationNotIn applies the NotIn predicate on the "duration" field.
-func DurationNotIn(vs ...int) predicate.Song {
+func DurationNotIn(vs ...uint32) predicate.Song {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -2817,28 +2817,28 @@ func DurationNotIn(vs ...int) predicate.Song {
 }
 
 // DurationGT applies the GT predicate on the "duration" field.
-func DurationGT(v int) predicate.Song {
+func DurationGT(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldDuration), v))
 	})
 }
 
 // DurationGTE applies the GTE predicate on the "duration" field.
-func DurationGTE(v int) predicate.Song {
+func DurationGTE(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldDuration), v))
 	})
 }
 
 // DurationLT applies the LT predicate on the "duration" field.
-func DurationLT(v int) predicate.Song {
+func DurationLT(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldDuration), v))
 	})
 }
 
 // DurationLTE applies the LTE predicate on the "duration" field.
-func DurationLTE(v int) predicate.Song {
+func DurationLTE(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldDuration), v))
 	})
@@ -2859,21 +2859,21 @@ func DurationNotNil() predicate.Song {
 }
 
 // PlayCountEQ applies the EQ predicate on the "play_count" field.
-func PlayCountEQ(v uint) predicate.Song {
+func PlayCountEQ(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldPlayCount), v))
 	})
 }
 
 // PlayCountNEQ applies the NEQ predicate on the "play_count" field.
-func PlayCountNEQ(v uint) predicate.Song {
+func PlayCountNEQ(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldPlayCount), v))
 	})
 }
 
 // PlayCountIn applies the In predicate on the "play_count" field.
-func PlayCountIn(vs ...uint) predicate.Song {
+func PlayCountIn(vs ...uint32) predicate.Song {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -2890,7 +2890,7 @@ func PlayCountIn(vs ...uint) predicate.Song {
 }
 
 // PlayCountNotIn applies the NotIn predicate on the "play_count" field.
-func PlayCountNotIn(vs ...uint) predicate.Song {
+func PlayCountNotIn(vs ...uint32) predicate.Song {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -2907,49 +2907,49 @@ func PlayCountNotIn(vs ...uint) predicate.Song {
 }
 
 // PlayCountGT applies the GT predicate on the "play_count" field.
-func PlayCountGT(v uint) predicate.Song {
+func PlayCountGT(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldPlayCount), v))
 	})
 }
 
 // PlayCountGTE applies the GTE predicate on the "play_count" field.
-func PlayCountGTE(v uint) predicate.Song {
+func PlayCountGTE(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldPlayCount), v))
 	})
 }
 
 // PlayCountLT applies the LT predicate on the "play_count" field.
-func PlayCountLT(v uint) predicate.Song {
+func PlayCountLT(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldPlayCount), v))
 	})
 }
 
 // PlayCountLTE applies the LTE predicate on the "play_count" field.
-func PlayCountLTE(v uint) predicate.Song {
+func PlayCountLTE(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldPlayCount), v))
 	})
 }
 
 // SkippedCountEQ applies the EQ predicate on the "skipped_count" field.
-func SkippedCountEQ(v uint) predicate.Song {
+func SkippedCountEQ(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldSkippedCount), v))
 	})
 }
 
 // SkippedCountNEQ applies the NEQ predicate on the "skipped_count" field.
-func SkippedCountNEQ(v uint) predicate.Song {
+func SkippedCountNEQ(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldSkippedCount), v))
 	})
 }
 
 // SkippedCountIn applies the In predicate on the "skipped_count" field.
-func SkippedCountIn(vs ...uint) predicate.Song {
+func SkippedCountIn(vs ...uint32) predicate.Song {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -2966,7 +2966,7 @@ func SkippedCountIn(vs ...uint) predicate.Song {
 }
 
 // SkippedCountNotIn applies the NotIn predicate on the "skipped_count" field.
-func SkippedCountNotIn(vs ...uint) predicate.Song {
+func SkippedCountNotIn(vs ...uint32) predicate.Song {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -2983,28 +2983,28 @@ func SkippedCountNotIn(vs ...uint) predicate.Song {
 }
 
 // SkippedCountGT applies the GT predicate on the "skipped_count" field.
-func SkippedCountGT(v uint) predicate.Song {
+func SkippedCountGT(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldSkippedCount), v))
 	})
 }
 
 // SkippedCountGTE applies the GTE predicate on the "skipped_count" field.
-func SkippedCountGTE(v uint) predicate.Song {
+func SkippedCountGTE(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldSkippedCount), v))
 	})
 }
 
 // SkippedCountLT applies the LT predicate on the "skipped_count" field.
-func SkippedCountLT(v uint) predicate.Song {
+func SkippedCountLT(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldSkippedCount), v))
 	})
 }
 
 // SkippedCountLTE applies the LTE predicate on the "skipped_count" field.
-func SkippedCountLTE(v uint) predicate.Song {
+func SkippedCountLTE(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldSkippedCount), v))
 	})
@@ -3136,21 +3136,21 @@ func CommentContainsFold(v string) predicate.Song {
 }
 
 // BeatsPerMinuteEQ applies the EQ predicate on the "beats_per_minute" field.
-func BeatsPerMinuteEQ(v uint) predicate.Song {
+func BeatsPerMinuteEQ(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldBeatsPerMinute), v))
 	})
 }
 
 // BeatsPerMinuteNEQ applies the NEQ predicate on the "beats_per_minute" field.
-func BeatsPerMinuteNEQ(v uint) predicate.Song {
+func BeatsPerMinuteNEQ(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldBeatsPerMinute), v))
 	})
 }
 
 // BeatsPerMinuteIn applies the In predicate on the "beats_per_minute" field.
-func BeatsPerMinuteIn(vs ...uint) predicate.Song {
+func BeatsPerMinuteIn(vs ...uint32) predicate.Song {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -3167,7 +3167,7 @@ func BeatsPerMinuteIn(vs ...uint) predicate.Song {
 }
 
 // BeatsPerMinuteNotIn applies the NotIn predicate on the "beats_per_minute" field.
-func BeatsPerMinuteNotIn(vs ...uint) predicate.Song {
+func BeatsPerMinuteNotIn(vs ...uint32) predicate.Song {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -3184,28 +3184,28 @@ func BeatsPerMinuteNotIn(vs ...uint) predicate.Song {
 }
 
 // BeatsPerMinuteGT applies the GT predicate on the "beats_per_minute" field.
-func BeatsPerMinuteGT(v uint) predicate.Song {
+func BeatsPerMinuteGT(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldBeatsPerMinute), v))
 	})
 }
 
 // BeatsPerMinuteGTE applies the GTE predicate on the "beats_per_minute" field.
-func BeatsPerMinuteGTE(v uint) predicate.Song {
+func BeatsPerMinuteGTE(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldBeatsPerMinute), v))
 	})
 }
 
 // BeatsPerMinuteLT applies the LT predicate on the "beats_per_minute" field.
-func BeatsPerMinuteLT(v uint) predicate.Song {
+func BeatsPerMinuteLT(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldBeatsPerMinute), v))
 	})
 }
 
 // BeatsPerMinuteLTE applies the LTE predicate on the "beats_per_minute" field.
-func BeatsPerMinuteLTE(v uint) predicate.Song {
+func BeatsPerMinuteLTE(v uint32) predicate.Song {
 	return predicate.Song(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldBeatsPerMinute), v))
 	})

@@ -2,12 +2,12 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"github.com/jeffsvajlenko/fortissimo/server/ent"
 	"google.golang.org/grpc"
 	"log"
 	"net"
-	"flag"
 
 	"github.com/jeffsvajlenko/fortissimo/api/go/fortissimo"
 	"github.com/jeffsvajlenko/fortissimo/server/services"
@@ -15,7 +15,7 @@ import (
 )
 
 func main() {
-// Input Parameters
+	// Input Parameters
 	port := flag.Int("port", 50000, "The port the server should listen on (gRPC).")
 	dbConnStr := flag.String("dbconn", "localhost", "The postgresSQL connection string for the database.")
 	flag.Parse()
@@ -25,25 +25,48 @@ func main() {
 	fmt.Printf("\tListening on port %v\n", *port)
 	fmt.Printf("\tUsing database connection: %v\n", *dbConnStr)
 
-	// Establish Connection
-	dbclient, err := ent.Open("postgres", *dbConnStr)
+	// create a TCP listener
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%v", *port))
+	if err != nil {
+		log.Fatalf("failed to listen: %s", err)
+	}
+
+	// Initialize database
+	_, err = database(*dbConnStr, context.Background())
+	if err != nil {
+		log.Fatalf("failed to initialize database: %s", err)
+	}
+
+	// create instance of service
+	s := services.FortissimoGrpcApiServer{}
+
+	// create a gRPC server object
+	grpcServer := grpc.NewServer()
+
+	// attach service to the server
+	fortissimo.RegisterFortissimoServer(grpcServer, &s)
+
+	// start the server
+	err = grpcServer.Serve(lis)
+	if err != nil {
+		log.Fatalf("failed to serve: %s", err)
+	}
+	fmt.Println("Fortissimo has ended.  Goodbye!")
+}
+
+func database(dbConnStr string, ctx context.Context) (*ent.Client, error) {
+	dbclient, err := ent.Open("postgres", dbConnStr)
 	if err != nil {
 		log.Fatal(err)
+		return nil, err
 	}
 	defer dbclient.Close()
-	ctx := context.Background()
 
 	// Run Database Setup/Migrations
 	if err := dbclient.Schema.Create(ctx); err != nil {
 		log.Fatalf("failed creating schema resources : %v", err)
+		return nil, err
 	}
 
-	// Start gRPC Server
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%v", *port))
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
-	}
-	s := grpc.NewServer()
-	fortissimo.RegisterFortissimoServer(s, &services.FortissimoGrpcApiServer{})
-	s.Serve(lis)
+	return dbclient, nil
 }

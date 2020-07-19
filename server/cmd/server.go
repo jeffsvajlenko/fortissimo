@@ -32,13 +32,15 @@ func main() {
 	}
 
 	// Initialize database
-	_, err = database(*dbConnStr, context.Background())
+	dbclient, err := database(*dbConnStr, context.Background())
 	if err != nil {
 		log.Fatalf("failed to initialize database: %s", err)
 	}
 
 	// create instance of service
-	s := services.FortissimoGrpcApiServer{}
+	s := services.FortissimoGrpcApiServer{
+		DbClient: dbclient,
+	}
 
 	// create a gRPC server object
 	grpcServer := grpc.NewServer()

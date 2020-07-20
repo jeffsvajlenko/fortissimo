@@ -1,56 +1,58 @@
-package services
+package grpc
 
 import (
-	"errors"
 	timestamppb "github.com/golang/protobuf/ptypes"
 	"github.com/jeffsvajlenko/fortissimo/server/ent"
+	"github.com/jeffsvajlenko/fortissimo/server/services/library"
 )
 import "github.com/jeffsvajlenko/fortissimo/api/go/fortissimo"
 import "context"
 
-type FortissimoGrpcApiServer struct{
-	DbClient *ent.Client
+type Server struct{
+	libraryService library.Service
 }
 
-func (s *FortissimoGrpcApiServer) AddSong(ctx context.Context, request *fortissimo.AddSongRequest) (*fortissimo.AddSongResponse, error) {
-	return nil, errors.New("not yet supported")
+func New(libraryService library.Service) *Server {
+	return &Server{
+		libraryService: libraryService,
+	}
 }
 
-func (s *FortissimoGrpcApiServer) RemoveSong(ctx context.Context, request *fortissimo.RemoveSongRequest) (*fortissimo.RemoveSongResponse, error) {
-	err := s.DbClient.Song.DeleteOneID(request.Id).Exec(ctx)
+func (s *Server) RemoveSong(ctx context.Context, request *fortissimo.RemoveSongRequest) (*fortissimo.RemoveSongResponse, error) {
+	err := s.libraryService.RemoveSong(ctx, request.Id)
 	if err != nil {
 		return nil, err
 	}
 	return &fortissimo.RemoveSongResponse{}, err
 }
 
-func (s *FortissimoGrpcApiServer) GetSong(ctx context.Context, request *fortissimo.GetSongRequest) (*fortissimo.GetSongResponse, error) {
-	song, err := s.DbClient.Song.Get(ctx, request.Id)
+func (s *Server) GetSong(ctx context.Context, request *fortissimo.GetSongRequest) (*fortissimo.GetSongResponse, error) {
+	song, err := s.libraryService.GetSong(ctx, request.Id)
 	if err != nil {
 		return nil, err
 	}
 
 	return &fortissimo.GetSongResponse{
-		Song: EncodeSong(song),
+		Song: encodeSong(song),
 	}, err
 }
 
-func (s *FortissimoGrpcApiServer) GetSongs(request *fortissimo.GetSongsRequest, server fortissimo.Fortissimo_GetSongsServer) error {
-	songs, err := s.DbClient.Song.Query().All(server.Context())
+func (s *Server) GetSongs(request *fortissimo.GetSongsRequest, server fortissimo.Fortissimo_GetSongsServer) error {
+	songs, err := s.libraryService.GetSongs(server.Context())
 	if err != nil {
 		return err
 	}
 
 	for _, element := range songs {
 		server.Send(&fortissimo.GetSongsResponse{
-			Song: EncodeSong(element),
+			Song: encodeSong(element),
 		})
 	}
 
 	return nil
 }
 
-func EncodeSong(song *ent.Song) *fortissimo.Song {
+func encodeSong(song *ent.Song) *fortissimo.Song {
 	dateTagged, err := timestamppb.TimestampProto(song.DateTagged)
 	if err != nil {
 		dateTagged = nil

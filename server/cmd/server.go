@@ -8,6 +8,7 @@ import (
 	fortissimoGrpc "github.com/jeffsvajlenko/fortissimo/server/services/grpc"
 	"github.com/jeffsvajlenko/fortissimo/server/services/library"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 	"log"
 	"net"
 
@@ -49,14 +50,14 @@ func main() {
 	s := fortissimoGrpc.New(library.New(dbclient))
 
 	// Create TLS credentials
-	//creds, err := credentials.NewServerTLSFromFile(*certFile, *keyFile)
-	//if err != nil {
-	//	log.Fatalf("could not load TLS keys: %s", err)
-	//}
+	creds, err := credentials.NewServerTLSFromFile(*certFile, *keyFile)
+	if err != nil {
+		log.Fatalf("could not load TLS keys: %s", err)
+	}
 
 	// create a gRPC server object
 	opts := []grpc.ServerOption{
-	//	grpc.Creds(creds),
+		grpc.Creds(creds),
 	}
 	grpcServer := grpc.NewServer(opts...)
 

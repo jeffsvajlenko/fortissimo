@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/jeffsvajlenko/fortissimo/api/go/fortissimo"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 	"io"
 	"log"
 )
@@ -19,13 +20,13 @@ func main() {
 	var conn *grpc.ClientConn
 
 	// creds
-	//creds, err := credentials.NewClientTLSFromFile("cert/server.crt", "")
-	//if err != nil {
-	//	log.Fatalf("could not load tls cert: %s", err)
-	//}
+	creds, err := credentials.NewClientTLSFromFile("cert/server.crt", "")
+	if err != nil {
+		log.Fatalf("could not load tls cert: %s", err)
+	}
 
 	// connect
-	conn, err := grpc.Dial(fmt.Sprintf("%v:%v", *server, *port), grpc.WithInsecure())
+	conn, err = grpc.Dial(fmt.Sprintf("%v:%v", *server, *port), grpc.WithTransportCredentials(creds))
 	if err != nil {
 		log.Fatalf("did not connect: %s", err)
 	}
